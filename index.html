@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMC Backtester</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0b0f14;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      height: 64px;
+      background: #111820;
+      border-bottom: 1px solid #27303a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      color: #8b98a7;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    select {
+      background: #18212b;
+      color: white;
+      border: 1px solid #303b47;
+      border-radius: 5px;
+      padding: 9px 12px;
+    }
+
+    main {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
+    }
+
+    .card {
+      background: #111820;
+      border: 1px solid #27303a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .chart-header {
+      height: 50px;
+      border-bottom: 1px solid #27303a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 15px;
+    }
+
+    .pair {
+      font-weight: bold;
+    }
+
+    .timeframe {
+      color: #8b98a7;
+      margin-left: 8px;
+    }
+
+    .mode {
+      color: #22c55e;
+      font-size: 11px;
+    }
+
+    .chart {
+      height: 500px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(#18212b 1px, transparent 1px),
+        linear-gradient(90deg, #18212b 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .chart-message {
+      text-align: center;
+      color: #8b98a7;
+    }
+
+    .chart-message .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    aside {
+      padding: 16px;
+    }
+
+    aside h2 {
+      margin-bottom: 15px;
+      font-size: 17px;
+    }
+
+    .stat {
+      background: #18212b;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: #8b98a7;
+      font-size: 12px;
+    }
+
+    .stat-value {
+      margin-top: 5px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    @media (max-width: 800px) {
+      header {
+        height: auto;
+        padding: 12px;
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .controls {
+        width: 100%;
+      }
+
+      select {
+        flex: 1;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .chart {
+        height: 430px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div>
+      <div class="logo">📊 SMC Backtester</div>
+      <div class="subtitle">Smart Money Concepts Backtesting</div>
+    </div>
+
+    <div class="controls">
+      <select id="pair">
+        <option>GBPUSD</option>
+        <option>USDJPY</option>
+        <option>GBPJPY</option>
+        <option>EURJPY</option>
+        <option>EURGBP</option>
+        <option>AUDUSD</option>
+        <option>NZDUSD</option>
+        <option>USDCAD</option>
+        <option>USDCHF</option>
+      </select>
+
+      <select id="timeframe">
+        <option>1M</option>
+        <option>3M</option>
+        <option>5M</option>
+        <option selected>15M</option>
+        <option>30M</option>
+        <option>1H</option>
+        <option>4H</option>
+        <option>1D</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="card">
+      <div class="chart-header">
+        <div>
+          <span class="pair" id="pairDisplay">GBPUSD</span>
+          <span class="timeframe" id="timeframeDisplay">15M</span>
+        </div>
+
+        <div class="mode">● BACKTEST MODE</div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-message">
+          <div class="icon">📈</div>
+          <h2>Chart Coming Next</h2>
+          <p>Our historical candlestick replay will appear here.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h2>Backtest Panel</h2>
+
+      <div class="stat">
+        <div class="stat-label">Account Balance</div>
+        <div class="stat-value">$10,000</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Risk Per Trade</div>
+        <div class="stat-value">1%</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Trades</div>
+        <div class="stat-value">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Win Rate</div>
+        <div class="stat-value">0%</div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    const pair = document.getElementById("pair");
+    const timeframe = document.getElementById("timeframe");
+
+    const pairDisplay = document.getElementById("pairDisplay");
+    const timeframeDisplay = document.getElementById("timeframeDisplay");
+
+    pair.addEventListener("change", function () {
+      pairDisplay.textContent = this.value;
+    });
+
+    timeframe.addEventListener("change", function () {
+      timeframeDisplay.textContent = this.value;
+    });
+  </script>
+
+</body>
+  </html>
