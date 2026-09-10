@@ -3,446 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1118">
 <title>SMC Backtester</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  background:#080d13;
-  color:#e8edf3;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0b1118;
+  color: #e8edf3;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  min-height: 100vh;
+}
+
+.header {
+  padding: 22px 18px 16px;
+  border-bottom: 1px solid #26313d;
+  background: #0e151d;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.subtitle {
+  margin-top: 5px;
+  color: #8793a1;
+  font-size: 15px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #0e151d;
+  border-bottom: 1px solid #26313d;
+}
+
+select,
 button,
-select,
-input{
-  font:inherit;
+input {
+  width: 100%;
+  border: 1px solid #334252;
+  border-radius: 9px;
+  background: #17212d;
+  color: #edf2f7;
+  padding: 13px;
+  font-size: 16px;
 }
 
-button{
-  cursor:pointer;
+button {
+  cursor: pointer;
+  font-weight: 700;
 }
 
-.header{
-  background:#0d141c;
-  border-bottom:1px solid #26313d;
-  padding:18px;
+button:active {
+  transform: scale(.98);
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:5px;
+.main {
+  padding: 18px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.brand-icon{
-  font-size:30px;
+.chart-card {
+  border: 1px solid #26313d;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #101820;
 }
 
-.brand h1{
-  font-size:25px;
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px;
+  border-bottom: 1px solid #26313d;
 }
 
-.subtitle{
-  color:#82909f;
-  font-size:14px;
+.pair-title {
+  font-size: 22px;
+  font-weight: 800;
 }
 
-.top-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  padding:15px;
-  background:#0b1118;
-  border-bottom:1px solid #26313d;
+.time-title {
+  color: #8995a3;
+  margin-left: 7px;
 }
 
-.control{
-  width:100%;
+.status {
+  color: #28d56f;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.control label{
-  display:block;
-  color:#84919e;
-  font-size:12px;
-  margin-bottom:6px;
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 510px;
+  background:
+    linear-gradient(rgba(40,55,69,.34) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40,55,69,.34) 1px, transparent 1px);
+  background-size: 20% 20%;
+  overflow: hidden;
 }
 
-select,
-input{
-  width:100%;
-  background:#151f2b;
-  color:#edf2f7;
-  border:1px solid #344252;
-  border-radius:9px;
-  padding:13px;
-  outline:none;
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-select:focus,
-input:focus{
-  border-color:#22c55e;
+.price-label {
+  position: absolute;
+  right: 0;
+  background: #ef4b55;
+  padding: 8px 11px;
+  font-weight: 700;
+  font-size: 15px;
 }
 
-.market-bar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px 16px;
-  background:#0e161f;
-  border-bottom:1px solid #26313d;
+.chart-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 15px;
+  border-top: 1px solid #26313d;
 }
 
-.market-name{
-  font-size:20px;
-  font-weight:bold;
+.green {
+  background: #117b40;
+  border-color: #1bbd62;
 }
 
-.market-price{
-  font-size:18px;
-  font-weight:bold;
+.secondary {
+  background: #17212d;
 }
 
-.up{
-  color:#22c55e;
+.replay-time {
+  padding: 0 15px 17px;
+  color: #8d98a6;
+  font-size: 14px;
 }
 
-.down{
-  color:#ef4444;
+.panel {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid #26313d;
+  border-radius: 13px;
+  background: #101820;
 }
 
-.session{
-  font-size:12px;
-  color:#9aa7b4;
-  text-align:right;
+.panel h2 {
+  margin-top: 0;
+  font-size: 22px;
 }
 
-.chart-wrapper{
-  margin:14px;
-  background:#0e151e;
-  border:1px solid #293542;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 8px 30px rgba(0,0,0,.25);
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
-.chart-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px;
-  border-bottom:1px solid #293542;
+.stat {
+  background: #17212d;
+  border-radius: 10px;
+  padding: 15px;
 }
 
-.chart-title{
-  font-size:18px;
-  font-weight:bold;
+.stat-name {
+  color: #8d98a6;
+  font-size: 14px;
 }
 
-.mode{
-  color:#22c55e;
-  font-size:13px;
+.stat-value {
+  margin-top: 7px;
+  font-size: 22px;
+  font-weight: 800;
 }
 
-.chart-area{
-  position:relative;
-  height:520px;
-  background:#0c141d;
+.trade-form {
+  display: grid;
+  gap: 12px;
 }
 
-#chart{
-  width:100%;
-  height:100%;
-  display:block;
+label {
+  display: block;
+  color: #9aa6b4;
+  margin-bottom: 6px;
+  font-size: 14px;
 }
 
-.chart-info{
-  position:absolute;
-  top:12px;
-  left:12px;
-  z-index:5;
-  pointer-events:none;
+.result {
+  margin-top: 15px;
+  border-radius: 10px;
+  padding: 16px;
+  background: #17212d;
+  line-height: 1.7;
 }
 
-.ohlc{
-  background:rgba(7,12,18,.85);
-  border:1px solid #283441;
-  border-radius:6px;
-  padding:7px 9px;
-  font-size:11px;
-  color:#b7c1ca;
+.buy {
+  color: #24d36b;
 }
 
-.crosshair-info{
-  position:absolute;
-  right:10px;
-  top:10px;
-  z-index:5;
-  font-size:11px;
-  color:#82909e;
-  text-align:right;
+.sell {
+  color: #ff5862;
 }
 
-.price-line{
-  position:absolute;
-  left:0;
-  right:0;
-  border-top:1px dashed #ef4444;
-  pointer-events:none;
-  z-index:3;
+.data-note {
+  color: #9aa6b4;
+  line-height: 1.6;
+  font-size: 14px;
 }
 
-.price-label{
-  position:absolute;
-  right:0;
-  transform:translateY(-50%);
-  background:#ef4444;
-  color:white;
-  padding:6px 9px;
-  font-size:12px;
-  border-radius:4px 0 0 4px;
-  z-index:4;
-}
-
-.chart-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:12px;
-  background:#0c131b;
-  border-top:1px solid #293542;
-}
-
-.btn{
-  border:1px solid #354454;
-  background:#17222f;
-  color:#edf2f7;
-  border-radius:9px;
-  padding:13px 10px;
-  font-weight:bold;
-}
-
-.btn:active{
-  transform:scale(.98);
-}
-
-.btn-green{
-  background:#126b38;
-  border-color:#25a85d;
-}
-
-.btn-red{
-  background:#70202a;
-  border-color:#a93645;
-}
-
-.btn-full{
-  grid-column:1/-1;
-}
-
-.panel{
-  margin:14px;
-  padding:16px;
-  background:#0e151e;
-  border:1px solid #293542;
-  border-radius:12px;
-}
-
-.panel h2{
-  font-size:20px;
-  margin-bottom:15px;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.field{
-  margin-bottom:12px;
-}
-
-.field label{
-  display:block;
-  color:#9aa7b4;
-  font-size:12px;
-  margin-bottom:6px;
-}
-
-.trade-direction{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.direction{
-  padding:12px;
-  border:1px solid #354454;
-  border-radius:8px;
-  background:#151f2b;
-  color:white;
-}
-
-.direction.active-buy{
-  background:#126b38;
-  border-color:#22c55e;
-}
-
-.direction.active-sell{
-  background:#70202a;
-  border-color:#ef4444;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.stat{
-  background:#151f2b;
-  border:1px solid #263442;
-  border-radius:9px;
-  padding:12px;
-}
-
-.stat-title{
-  color:#84919e;
-  font-size:11px;
-  margin-bottom:5px;
-}
-
-.stat-value{
-  font-size:17px;
-  font-weight:bold;
-}
-
-.green{
-  color:#22c55e;
-}
-
-.red{
-  color:#ef4444;
-}
-
-.yellow{
-  color:#facc15;
-}
-
-.file-box{
-  background:#111b25;
-  border:1px dashed #3c4b5b;
-  border-radius:10px;
-  padding:14px;
-}
-
-.file-box p{
-  color:#8c99a6;
-  font-size:12px;
-  line-height:1.5;
-  margin-bottom:10px;
-}
-
-input[type=file]{
-  padding:10px;
-}
-
-.country-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-}
-
-.country{
-  background:#151f2b;
-  border:1px solid #293746;
-  border-radius:8px;
-  padding:11px;
-}
-
-.country strong{
-  display:block;
-  font-size:13px;
-}
-
-.country span{
-  display:block;
-  color:#8997a4;
-  font-size:11px;
-  margin-top:3px;
-}
-
-.trade-list{
-  max-height:280px;
-  overflow:auto;
-}
-
-.trade{
-  display:grid;
-  grid-template-columns:70px 1fr 70px;
-  gap:8px;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid #202b36;
-  font-size:12px;
-}
-
-.trade:last-child{
-  border-bottom:0;
-}
-
-.trade-result{
-  text-align:right;
-  font-weight:bold;
-}
-
-.empty{
-  color:#778491;
-  text-align:center;
-  padding:20px;
-}
-
-.footer{
-  text-align:center;
-  color:#66737f;
-  padding:25px 10px 35px;
-  font-size:11px;
-}
-
-@media(max-width:600px){
-  .chart-area{
-    height:470px;
+@media (max-width: 650px) {
+  .chart-wrap {
+    height: 500px;
   }
 
-  .brand h1{
-    font-size:22px;
-  }
-
-  .stats,
-  .country-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:380px){
-  .top-controls,
-  .form-grid,
-  .chart-buttons{
-    grid-template-columns:1fr;
-  }
-
-  .btn-full{
-    grid-column:auto;
+  .stats {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>
@@ -451,435 +240,216 @@ input[type=file]{
 <body>
 
 <header class="header">
-  <div class="brand">
-    <div class="brand-icon">📊</div>
-    <h1>SMC Backtester</h1>
-  </div>
-  <div class="subtitle">
-    Smart Money Concepts Backtesting
-  </div>
+  <div class="logo">📊 SMC Backtester</div>
+  <div class="subtitle">Smart Money Concepts Backtesting</div>
 </header>
 
-<section class="top-controls">
+<section class="controls">
+  <select id="pair">
+    <option>GBPUSD</option>
+    <option>EURUSD</option>
+    <option>USDJPY</option>
+    <option>GBPJPY</option>
+    <option>EURJPY</option>
+    <option>EURGBP</option>
+    <option>AUDUSD</option>
+    <option>NZDUSD</option>
+    <option>USDCAD</option>
+    <option>USDCHF</option>
+  </select>
 
-  <div class="control">
-    <label>MARKET</label>
-    <select id="pairSelect">
-      <option value="GBPUSD">🇬🇧 GBPUSD</option>
-      <option value="EURUSD">🇪🇺 EURUSD</option>
-      <option value="USDJPY">🇺🇸 USDJPY</option>
-      <option value="GBPJPY">🇬🇧 GBPJPY</option>
-      <option value="EURJPY">🇪🇺 EURJPY</option>
-      <option value="EURGBP">🇪🇺 EURGBP</option>
-      <option value="AUDUSD">🇦🇺 AUDUSD</option>
-      <option value="NZDUSD">🇳🇿 NZDUSD</option>
-      <option value="USDCAD">🇨🇦 USDCAD</option>
-      <option value="USDCHF">🇨🇭 USDCHF</option>
-    </select>
-  </div>
-
-  <div class="control">
-    <label>TIMEFRAME</label>
-    <select id="timeframe">
-      <option value="1">1M</option>
-      <option value="5">5M</option>
-      <option value="15" selected>15M</option>
-      <option value="30">30M</option>
-      <option value="60">1H</option>
-      <option value="240">4H</option>
-      <option value="D">1D</option>
-    </select>
-  </div>
-
+  <select id="timeframe">
+    <option value="15">15M</option>
+    <option value="5">5M</option>
+    <option value="30">30M</option>
+    <option value="60">1H</option>
+    <option value="240">4H</option>
+    <option value="1440">1D</option>
+  </select>
 </section>
 
-<div class="market-bar">
-  <div>
-    <div class="market-name" id="marketName">GBPUSD</div>
-    <div class="session" id="sessionName">London / New York</div>
-  </div>
+<main class="main">
 
-  <div class="market-price" id="marketPrice">
-    1.25680
-  </div>
-</div>
+<section class="chart-card">
 
-<section class="chart-wrapper">
-
-  <div class="chart-head">
-    <div class="chart-title">
-      <span id="chartPair">GBPUSD</span>
-      <span style="color:#7d8995" id="chartTimeframe">15M</span>
+  <div class="chart-header">
+    <div>
+      <span class="pair-title" id="pairTitle">GBPUSD</span>
+      <span class="time-title" id="timeTitle">15M</span>
     </div>
 
-    <div class="mode">
-      ● BACKTEST MODE
-    </div>
+    <div class="status">● BACKTEST MODE</div>
   </div>
 
-  <div class="chart-area">
-
+  <div class="chart-wrap">
     <canvas id="chart"></canvas>
-
-    <div class="chart-info">
-      <div class="ohlc" id="ohlc">
-        O 1.25620
-        H 1.25713
-        L 1.25580
-        C 1.25680
-      </div>
-    </div>
-
-    <div class="crosshair-info" id="timeInfo">
-      Historical Replay
-    </div>
-
-    <div class="price-line" id="priceLine"></div>
     <div class="price-label" id="priceLabel">1.25680</div>
-
   </div>
 
   <div class="chart-buttons">
-    <button class="btn" id="previousBtn">
+    <button class="secondary" id="previousBtn">
       ◀ Previous
     </button>
 
-    <button class="btn btn-green" id="nextBtn">
+    <button class="green" id="nextBtn">
       Next Candle ▶
     </button>
 
-    <button class="btn" id="resetBtn">
+    <button class="secondary" id="resetBtn">
       ↻ Reset Replay
     </button>
 
-    <button class="btn" id="fitBtn">
+    <button class="secondary" id="fitBtn">
       ⛶ Fit Chart
     </button>
   </div>
 
-</section>
-
-<section class="panel">
-
-  <h2>Backtest Panel</h2>
-
-  <div class="form-grid">
-
-    <div class="field">
-      <label>ACCOUNT BALANCE</label>
-      <input id="balance" type="number" value="10000">
-    </div>
-
-    <div class="field">
-      <label>RISK PER TRADE (%)</label>
-      <input id="risk" type="number" value="1" step="0.1">
-    </div>
-
-    <div class="field">
-      <label>STOP LOSS (PIPS)</label>
-      <input id="slPips" type="number" value="20">
-    </div>
-
-    <div class="field">
-      <label>TAKE PROFIT (PIPS)</label>
-      <input id="tpPips" type="number" value="40">
-    </div>
-
-  </div>
-
-  <div class="field">
-    <label>DIRECTION</label>
-
-    <div class="trade-direction">
-
-      <button
-        class="direction active-buy"
-        id="buyBtn"
-        onclick="setDirection('BUY')">
-        BUY
-      </button>
-
-      <button
-        class="direction"
-        id="sellBtn"
-        onclick="setDirection('SELL')">
-        SELL
-      </button>
-
-    </div>
-  </div>
-
-  <button class="btn btn-green btn-full" id="recordTradeBtn">
-    + Record Backtest Trade
-  </button>
-
-</section>
-
-<section class="panel">
-
-  <h2>Backtest Statistics</h2>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-title">START BALANCE</div>
-      <div class="stat-value" id="startBalance">
-        $10,000.00
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">CURRENT BALANCE</div>
-      <div class="stat-value" id="currentBalance">
-        $10,000.00
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">TRADES</div>
-      <div class="stat-value" id="tradeCount">
-        0
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">WIN RATE</div>
-      <div class="stat-value green" id="winRate">
-        0%
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">TOTAL PROFIT</div>
-      <div class="stat-value green" id="totalProfit">
-        $0.00
-      </div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">MAX DRAWNDOWN</div>
-      <div class="stat-value red" id="drawdown">
-        $0.00
-      </div>
-    </div>
-
+  <div class="replay-time" id="replayTime">
+    Replay candle: Fri, 03 Jan 2025 00:45:00 GMT
   </div>
 
 </section>
 
 <section class="panel">
 
-  <h2>Historical Market Data</h2>
+<h2>Backtest Statistics</h2>
 
-  <div class="file-box">
+<div class="stats">
 
-    <p>
-      Upload your historical CSV data to backtest real candles.
-      The CSV should contain:
-      <b>time, open, high, low, close</b>.
-    </p>
-
-    <input
-      type="file"
-      id="csvFile"
-      accept=".csv,text/csv"
-    >
-
-    <button
-      class="btn btn-green btn-full"
-      id="loadCsvBtn"
-      style="margin-top:10px">
-      Load Historical Data
-    </button>
-
+  <div class="stat">
+    <div class="stat-name">Account Balance</div>
+    <div class="stat-value" id="balance">$10,000</div>
   </div>
 
-</section>
-
-<section class="panel">
-
-  <h2>🌍 Markets & Countries</h2>
-
-  <div class="country-grid">
-
-    <div class="country">
-      <strong>🇬🇧 United Kingdom</strong>
-      <span>GBP — London</span>
-    </div>
-
-    <div class="country">
-      <strong>🇺🇸 United States</strong>
-      <span>USD — New York</span>
-    </div>
-
-    <div class="country">
-      <strong>🇯🇵 Japan</strong>
-      <span>JPY — Tokyo</span>
-    </div>
-
-    <div class="country">
-      <strong>🇪🇺 European Union</strong>
-      <span>EUR — Frankfurt</span>
-    </div>
-
-    <div class="country">
-      <strong>🇦🇺 Australia</strong>
-      <span>AUD — Sydney</span>
-    </div>
-
-    <div class="country">
-      <strong>🇳🇿 New Zealand</strong>
-      <span>NZD — Wellington</span>
-    </div>
-
-    <div class="country">
-      <strong>🇨🇦 Canada</strong>
-      <span>CAD — Toronto</span>
-    </div>
-
-    <div class="country">
-      <strong>🇨🇭 Switzerland</strong>
-      <span>CHF — Zurich</span>
-    </div>
-
+  <div class="stat">
+    <div class="stat-name">Trades</div>
+    <div class="stat-value" id="trades">0</div>
   </div>
 
-</section>
-
-<section class="panel">
-
-  <h2>Trade History</h2>
-
-  <div class="trade-list" id="tradeList">
-    <div class="empty">
-      No trades recorded yet.
-    </div>
+  <div class="stat">
+    <div class="stat-name">Wins</div>
+    <div class="stat-value" id="wins">0</div>
   </div>
 
-</section>
+  <div class="stat">
+    <div class="stat-name">Losses</div>
+    <div class="stat-value" id="losses">0</div>
+  </div>
 
-<div class="footer">
-  SMC Backtester • Educational backtesting tool
+  <div class="stat">
+    <div class="stat-name">Win Rate</div>
+    <div class="stat-value" id="winRate">0%</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-name">Profit / Loss</div>
+    <div class="stat-value" id="profitLoss">$0.00</div>
+  </div>
+
 </div>
 
-<script>
-/* =========================================================
-   SMC BACKTESTER
-   SINGLE FILE VERSION
-   ========================================================= */
+</section>
 
+<section class="panel">
+
+<h2>📝 Record Backtest Trade</h2>
+
+<div class="trade-form">
+
+  <div>
+    <label>Direction</label>
+    <select id="direction">
+      <option value="BUY">BUY</option>
+      <option value="SELL">SELL</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Entry Price</label>
+    <input id="entry" type="number" step="0.00001" placeholder="1.25000">
+  </div>
+
+  <div>
+    <label>Stop Loss</label>
+    <input id="sl" type="number" step="0.00001" placeholder="1.24800">
+  </div>
+
+  <div>
+    <label>Take Profit</label>
+    <input id="tp" type="number" step="0.00001" placeholder="1.25400">
+  </div>
+
+  <div>
+    <label>Risk Per Trade ($)</label>
+    <input id="risk" type="number" value="100">
+  </div>
+
+  <button class="green" id="recordWin">
+    Record WIN
+  </button>
+
+  <button class="secondary" id="recordLoss">
+    Record LOSS
+  </button>
+
+</div>
+
+<div class="result" id="tradeResult">
+  Enter your trade information and record the result.
+</div>
+
+</section>
+
+<section class="panel">
+
+<h2>📁 Historical Market Data</h2>
+
+<div class="data-note">
+  For the full backtester, this section will allow you to load
+  historical OHLC candle data and replay it candle-by-candle.
+  The chart above already works as a local replay engine.
+</div>
+
+<br>
+
+<input type="file" id="csvFile" accept=".csv">
+
+<br><br>
+
+<button class="green" id="loadCsv">
+  Load Historical Data
+</button>
+
+<div class="result" id="fileResult">
+  No historical data loaded.
+</div>
+
+</section>
+
+</main>
+
+<script>
 const canvas = document.getElementById("chart");
 const ctx = canvas.getContext("2d");
 
-const pairSelect = document.getElementById("pairSelect");
-const timeframe = document.getElementById("timeframe");
+const pairSelect = document.getElementById("pair");
+const timeframeSelect = document.getElementById("timeframe");
 
-const marketName = document.getElementById("marketName");
-const chartPair = document.getElementById("chartPair");
-const chartTimeframe = document.getElementById("chartTimeframe");
-const marketPrice = document.getElementById("marketPrice");
+const pairTitle = document.getElementById("pairTitle");
+const timeTitle = document.getElementById("timeTitle");
 const priceLabel = document.getElementById("priceLabel");
-const priceLine = document.getElementById("priceLine");
-const ohlc = document.getElementById("ohlc");
-const timeInfo = document.getElementById("timeInfo");
-
-const balanceInput = document.getElementById("balance");
-const riskInput = document.getElementById("risk");
-const slPipsInput = document.getElementById("slPips");
-const tpPipsInput = document.getElementById("tpPips");
-
-let direction = "BUY";
+const replayTime = document.getElementById("replayTime");
 
 let candles = [];
-let visibleCandles = [];
-let replayIndex = 70;
+let replayIndex = 0;
 
-let trades = [];
+let balance = 10000;
+let trades = 0;
+let wins = 0;
+let losses = 0;
+let profitLoss = 0;
 
-let startBalance = 10000;
-let currentBalance = 10000;
-let peakBalance = 10000;
-let maxDrawdown = 0;
-
-const pairData = {
-  GBPUSD: {
-    base: 1.25680,
-    volatility: 0.0010,
-    digits: 5,
-    session: "London / New York"
-  },
-
-  EURUSD: {
-    base: 1.08250,
-    volatility: 0.0008,
-    digits: 5,
-    session: "London / New York"
-  },
-
-  USDJPY: {
-    base: 149.850,
-    volatility: 0.10,
-    digits: 3,
-    session: "Tokyo / London / New York"
-  },
-
-  GBPJPY: {
-    base: 188.250,
-    volatility: 0.16,
-    digits: 3,
-    session: "Tokyo / London / New York"
-  },
-
-  EURJPY: {
-    base: 161.900,
-    volatility: 0.12,
-    digits: 3,
-    session: "Tokyo / London / New York"
-  },
-
-  EURGBP: {
-    base: 0.85850,
-    volatility: 0.00055,
-    digits: 5,
-    session: "London"
-  },
-
-  AUDUSD: {
-    base: 0.65450,
-    volatility: 0.0007,
-    digits: 5,
-    session: "Sydney / London / New York"
-  },
-
-  NZDUSD: {
-    base: 0.59250,
-    volatility: 0.0007,
-    digits: 5,
-    session: "Wellington / London / New York"
-  },
-
-  USDCAD: {
-    base: 1.35850,
-    volatility: 0.0008,
-    digits: 5,
-    session: "London / New York"
-  },
-
-  USDCHF: {
-    base: 0.90250,
-    volatility: 0.0007,
-    digits: 5,
-    session: "London / New York"
-  }
-};
-
-
-/* =========================================================
-   CANVAS
-   ========================================================= */
-
-function resizeCanvas(){
-
+function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
 
   const dpr = window.devicePixelRatio || 1;
@@ -887,1192 +457,544 @@ function resizeCanvas(){
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
 
-  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   drawChart();
 }
 
-window.addEventListener("resize",resizeCanvas);
-
-
-/* =========================================================
-   GENERATE DEMO HISTORICAL CANDLES
-   ========================================================= */
-
-function generateCandles(){
-
-  const pair = pairSelect.value;
-  const data = pairData[pair];
+function generateCandles() {
 
   candles = [];
 
-  let price = data.base;
+  let price = 1.25000;
 
-  let now = new Date();
+  const start = new Date("2025-01-02T00:00:00Z").getTime();
 
-  now.setHours(0,0,0,0);
-
-  for(let i=0;i<500;i++){
-
-    const time = new Date(
-      now.getTime() -
-      (500-i) * 15 * 60 * 1000
-    );
-
-    const movement =
-      (Math.random()-0.48) *
-      data.volatility;
+  for (let i = 0; i < 120; i++) {
 
     const open = price;
 
-    const close =
-      price + movement;
+    let movement;
 
-    const wick1 =
-      Math.random() *
-      data.volatility * 0.7;
+    if (i < 20) {
+      movement = (Math.random() - 0.48) * 0.0012;
+    }
+    else if (i < 45) {
+      movement = 0.00035 + (Math.random() - 0.5) * 0.001;
+    }
+    else if (i < 70) {
+      movement = -0.00025 + (Math.random() - 0.5) * 0.001;
+    }
+    else if (i < 100) {
+      movement = 0.00040 + (Math.random() - 0.5) * 0.001;
+    }
+    else {
+      movement = -0.00015 + (Math.random() - 0.5) * 0.001;
+    }
 
-    const wick2 =
-      Math.random() *
-      data.volatility * 0.7;
+    const close = open + movement;
 
     const high =
-      Math.max(open,close) + wick1;
+      Math.max(open, close) +
+      Math.random() * 0.0007;
 
     const low =
-      Math.min(open,close) - wick2;
+      Math.min(open, close) -
+      Math.random() * 0.0007;
 
     candles.push({
-      time,
       open,
       high,
       low,
-      close
+      close,
+      time: start + i * 15 * 60 * 1000
     });
 
     price = close;
   }
 
-  replayIndex = 70;
-
-  visibleCandles =
-    candles.slice(0,replayIndex);
-
-  updatePrice();
+  replayIndex = 35;
 
   drawChart();
+  updateReplay();
 }
 
-
-/* =========================================================
-   DRAW CHART
-   ========================================================= */
-
-function drawChart(){
+function drawChart() {
 
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
 
-  if(width <= 0 || height <= 0){
-    return;
-  }
+  ctx.clearRect(0, 0, width, height);
 
-  ctx.clearRect(0,0,width,height);
+  if (!candles.length) return;
 
-  ctx.fillStyle = "#0c141d";
-  ctx.fillRect(0,0,width,height);
+  const visible = candles.slice(
+    Math.max(0, replayIndex - 65),
+    replayIndex + 1
+  );
 
-  if(!visibleCandles.length){
-    return;
-  }
+  if (!visible.length) return;
 
-  const paddingLeft = 10;
-  const paddingRight = 70;
-  const paddingTop = 25;
-  const paddingBottom = 35;
+  let min = Infinity;
+  let max = -Infinity;
 
-  const chartWidth =
-    width - paddingLeft - paddingRight;
-
-  const chartHeight =
-    height - paddingTop - paddingBottom;
-
-  let minPrice = Infinity;
-  let maxPrice = -Infinity;
-
-  visibleCandles.forEach(c => {
-
-    minPrice = Math.min(
-      minPrice,
-      c.low
-    );
-
-    maxPrice = Math.max(
-      maxPrice,
-      c.high
-    );
-
+  visible.forEach(c => {
+    min = Math.min(min, c.low);
+    max = Math.max(max, c.high);
   });
 
-  const range =
-    maxPrice - minPrice || 1;
+  const padding = (max - min) * 0.10;
 
-  minPrice -= range * .08;
-  maxPrice += range * .08;
+  min -= padding;
+  max += padding;
 
-  const finalRange =
-    maxPrice - minPrice;
+  const chartHeight = height;
 
-  /* GRID */
-
-  ctx.strokeStyle = "#1b2835";
-  ctx.lineWidth = 1;
-
-  for(let i=0;i<=6;i++){
-
-    const y =
-      paddingTop +
-      chartHeight * i / 6;
-
-    ctx.beginPath();
-    ctx.moveTo(
-      paddingLeft,
-      y
-    );
-
-    ctx.lineTo(
-      width-paddingRight,
-      y
-    );
-
-    ctx.stroke();
-
-    const price =
-      maxPrice -
-      finalRange * i / 6;
-
-    ctx.fillStyle = "#71808d";
-    ctx.font = "11px Arial";
-
-    ctx.fillText(
-      formatPrice(price),
-      width-paddingRight+7,
-      y+4
-    );
+  function y(price) {
+    return chartHeight -
+      ((price - min) / (max - min)) *
+      chartHeight;
   }
-
-  for(let i=0;i<7;i++){
-
-    const x =
-      paddingLeft +
-      chartWidth * i / 6;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-      x,
-      paddingTop
-    );
-
-    ctx.lineTo(
-      x,
-      height-paddingBottom
-    );
-
-    ctx.stroke();
-  }
-
-
-  /* CANDLES */
-
-  const maxCandles =
-    Math.min(
-      visibleCandles.length,
-      95
-    );
-
-  const start =
-    Math.max(
-      0,
-      visibleCandles.length-maxCandles
-    );
-
-  const data =
-    visibleCandles.slice(start);
-
-  const spacing =
-    chartWidth / data.length;
 
   const candleWidth =
-    Math.max(
-      3,
-      spacing * .58
-    );
+    Math.max(5, width / visible.length * 0.68);
 
-  data.forEach((c,index)=>{
+  visible.forEach((c, index) => {
 
     const x =
-      paddingLeft +
-      spacing * index +
-      spacing/2;
+      index * (width / visible.length) +
+      (width / visible.length) / 2;
 
-    const yOpen =
-      priceToY(
-        c.open,
-        minPrice,
-        finalRange,
-        paddingTop,
-        chartHeight
-      );
+    const openY = y(c.open);
+    const closeY = y(c.close);
+    const highY = y(c.high);
+    const lowY = y(c.low);
 
-    const yClose =
-      priceToY(
-        c.close,
-        minPrice,
-        finalRange,
-        paddingTop,
-        chartHeight
-      );
-
-    const yHigh =
-      priceToY(
-        c.high,
-        minPrice,
-        finalRange,
-        paddingTop,
-        chartHeight
-      );
-
-    const yLow =
-      priceToY(
-        c.low,
-        minPrice,
-        finalRange,
-        paddingTop,
-        chartHeight
-      );
-
-    const green =
-      c.close >= c.open;
-
-    ctx.strokeStyle =
-      green ? "#22c55e" : "#ef4444";
-
-    ctx.fillStyle =
-      green ? "#22c55e" : "#ef4444";
-
-    /* wick */
-
-    ctx.lineWidth = 1;
+    const bullish = c.close >= c.open;
 
     ctx.beginPath();
+    ctx.lineWidth = 1;
 
-    ctx.moveTo(
-      x,
-      yHigh
-    );
+    ctx.strokeStyle = bullish
+      ? "#26d96f"
+      : "#ef4b55";
 
-    ctx.lineTo(
-      x,
-      yLow
-    );
-
+    ctx.moveTo(x, highY);
+    ctx.lineTo(x, lowY);
     ctx.stroke();
 
-    /* body */
-
-    const top =
-      Math.min(
-        yOpen,
-        yClose
-      );
-
-    const bottom =
-      Math.max(
-        yOpen,
-        yClose
-      );
-
+    const top = Math.min(openY, closeY);
     const bodyHeight =
-      Math.max(
-        1,
-        bottom-top
-      );
+      Math.max(1, Math.abs(closeY - openY));
+
+    ctx.fillStyle = bullish
+      ? "#20c967"
+      : "#e94a54";
 
     ctx.fillRect(
-      x-candleWidth/2,
+      x - candleWidth / 2,
       top,
       candleWidth,
       bodyHeight
     );
   });
 
+  const current =
+    candles[Math.min(replayIndex, candles.length - 1)];
 
-  /* LAST PRICE */
-
-  const last =
-    visibleCandles[
-      visibleCandles.length-1
-    ];
-
-  const lastY =
-    priceToY(
-      last.close,
-      minPrice,
-      finalRange,
-      paddingTop,
-      chartHeight
-    );
-
-  ctx.setLineDash([7,5]);
-
-  ctx.strokeStyle =
-    "#ef4444";
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    paddingLeft,
-    lastY
-  );
-
-  ctx.lineTo(
-    width-paddingRight,
-    lastY
-  );
-
-  ctx.stroke();
-
-  ctx.setLineDash([]);
-
-  /* DATE AXIS */
-
-  ctx.fillStyle = "#6f7e8b";
-  ctx.font = "11px Arial";
-
-  for(let i=0;i<5;i++){
-
-    const index =
-      Math.floor(
-        data.length *
-        i / 4
-      );
-
-    const c =
-      data[
-        Math.min(
-          index,
-          data.length-1
-        )
-      ];
-
-    const x =
-      paddingLeft +
-      spacing * index +
-      spacing/2;
-
-    const date =
-      c.time;
-
-    const label =
-      date.toLocaleTimeString(
-        [],
-        {
-          hour:"2-digit",
-          minute:"2-digit"
-        }
-      );
-
-    ctx.fillText(
-      label,
-      x-18,
-      height-12
-    );
+  if (current) {
+    priceLabel.textContent =
+      current.close.toFixed(5);
   }
-
 }
 
+function updateReplay() {
 
-/* =========================================================
-   PRICE CONVERSION
-   ========================================================= */
+  const current = candles[replayIndex];
 
-function priceToY(
-  price,
-  min,
-  range,
-  top,
-  height
-){
+  if (!current) return;
 
-  return top +
-    ((maxPriceSafe(price,min,range)) / range)
-    * height;
-}
+  const date =
+    new Date(current.time);
 
-function maxPriceSafe(
-  price,
-  min,
-  range
-){
+  replayTime.textContent =
+    "Replay candle: " +
+    date.toUTCString();
 
-  return (
-    min + range - price
-  );
-}
-
-
-function formatPrice(price){
-
-  const pair =
+  pairTitle.textContent =
     pairSelect.value;
 
-  const digits =
-    pairData[pair].digits;
-
-  return Number(price)
-    .toFixed(digits);
-}
-
-
-/* =========================================================
-   UPDATE PRICE
-   ========================================================= */
-
-function updatePrice(){
-
-  if(!visibleCandles.length){
-    return;
-  }
-
-  const last =
-    visibleCandles[
-      visibleCandles.length-1
-    ];
-
-  const price =
-    formatPrice(last.close);
-
-  marketName.textContent =
-    pairSelect.value;
-
-  chartPair.textContent =
-    pairSelect.value;
-
-  chartTimeframe.textContent =
-    timeframe.options[
-      timeframe.selectedIndex
+  const tf =
+    timeframeSelect.options[
+      timeframeSelect.selectedIndex
     ].text;
 
-  marketPrice.textContent =
-    price;
+  timeTitle.textContent = tf;
 
-  priceLabel.textContent =
-    price;
-
-  ohlc.innerHTML =
-    "O " + formatPrice(last.open) +
-    "&nbsp;&nbsp; H " + formatPrice(last.high) +
-    "&nbsp;&nbsp; L " + formatPrice(last.low) +
-    "&nbsp;&nbsp; C " + formatPrice(last.close);
-
-  document.getElementById("sessionName")
-    .textContent =
-    pairData[pairSelect.value].session;
-
-  timeInfo.textContent =
-    last.time.toLocaleString();
-
-  const chartHeight =
-    canvas.clientHeight;
-
-  const ratio =
-    (last.close -
-    getMinVisible()) /
-    (getMaxVisible()-getMinVisible() || 1);
-
-  const y =
-    chartHeight -
-    35 -
-    ratio *
-    (chartHeight-60);
-
-  priceLine.style.top =
-    Math.max(
-      5,
-      Math.min(
-        chartHeight-5,
-        y
-      )
-    ) + "px";
-
-  priceLabel.style.top =
-    Math.max(
-      5,
-      Math.min(
-        chartHeight-5,
-        y
-      )
-    ) + "px";
+  drawChart();
 }
-
-
-function getMinVisible(){
-
-  let value = Infinity;
-
-  visibleCandles.forEach(c=>{
-    value =
-      Math.min(value,c.low);
-  });
-
-  return value;
-}
-
-
-function getMaxVisible(){
-
-  let value = -Infinity;
-
-  visibleCandles.forEach(c=>{
-    value =
-      Math.max(value,c.high);
-  });
-
-  return value;
-}
-
-
-/* =========================================================
-   REPLAY
-   ========================================================= */
 
 document.getElementById("nextBtn")
-.addEventListener("click",()=>{
+.addEventListener("click", () => {
 
-  if(
-    replayIndex <
-    candles.length
-  ){
-
+  if (replayIndex < candles.length - 1) {
     replayIndex++;
-
-    visibleCandles =
-      candles.slice(
-        0,
-        replayIndex
-      );
-
-    updatePrice();
-    drawChart();
+    updateReplay();
   }
 
 });
-
 
 document.getElementById("previousBtn")
-.addEventListener("click",()=>{
+.addEventListener("click", () => {
 
-  if(replayIndex > 5){
-
+  if (replayIndex > 0) {
     replayIndex--;
-
-    visibleCandles =
-      candles.slice(
-        0,
-        replayIndex
-      );
-
-    updatePrice();
-    drawChart();
+    updateReplay();
   }
 
 });
-
 
 document.getElementById("resetBtn")
-.addEventListener("click",()=>{
+.addEventListener("click", () => {
 
-  replayIndex = 70;
-
-  visibleCandles =
-    candles.slice(
-      0,
-      replayIndex
-    );
-
-  updatePrice();
-  drawChart();
+  replayIndex = 35;
+  updateReplay();
 
 });
-
 
 document.getElementById("fitBtn")
-.addEventListener("click",()=>{
-
+.addEventListener("click", () => {
   resizeCanvas();
+});
+
+pairSelect.addEventListener("change", () => {
+
+  pairTitle.textContent =
+    pairSelect.value;
+
+  generateCandles();
 
 });
 
+timeframeSelect.addEventListener("change", () => {
 
-/* =========================================================
-   DIRECTION
-   ========================================================= */
+  timeTitle.textContent =
+    timeframeSelect.options[
+      timeframeSelect.selectedIndex
+    ].text;
 
-function setDirection(value){
-
-  direction = value;
-
-  const buy =
-    document.getElementById("buyBtn");
-
-  const sell =
-    document.getElementById("sellBtn");
-
-  buy.className =
-    "direction";
-
-  sell.className =
-    "direction";
-
-  if(value === "BUY"){
-
-    buy.className =
-      "direction active-buy";
-
-  }else{
-
-    sell.className =
-      "direction active-sell";
-
-  }
-
-}
-
-
-/* =========================================================
-   TRADE RECORDING
-   ========================================================= */
-
-document.getElementById("recordTradeBtn")
-.addEventListener("click",()=>{
-
-  if(!visibleCandles.length){
-    return;
-  }
-
-  const balance =
-    Number(balanceInput.value) || 0;
-
-  const riskPercent =
-    Number(riskInput.value) || 0;
-
-  const sl =
-    Number(slPipsInput.value) || 0;
-
-  const tp =
-    Number(tpPipsInput.value) || 0;
-
-  if(
-    balance <= 0 ||
-    riskPercent <= 0 ||
-    sl <= 0 ||
-    tp <= 0
-  ){
-
-    alert(
-      "Please enter valid balance, risk, SL and TP."
-    );
-
-    return;
-  }
-
-  const riskMoney =
-    balance *
-    riskPercent /
-    100;
-
-  const rewardMoney =
-    riskMoney *
-    (tp/sl);
-
-  const win =
-    Math.random() >= .5;
-
-  const result =
-    win
-      ? rewardMoney
-      : -riskMoney;
-
-  currentBalance += result;
-
-  peakBalance =
-    Math.max(
-      peakBalance,
-      currentBalance
-    );
-
-  maxDrawdown =
-    Math.max(
-      maxDrawdown,
-      peakBalance-currentBalance
-    );
-
-  const trade = {
-
-    number:
-      trades.length+1,
-
-    pair:
-      pairSelect.value,
-
-    direction,
-
-    risk:
-      riskMoney,
-
-    result,
-
-    win,
-
-    time:
-      new Date()
-
-  };
-
-  trades.push(trade);
-
-  updateStatistics();
-
-  renderTrades();
+  generateCandles();
 
 });
 
+function updateStats() {
 
-/* =========================================================
-   STATISTICS
-   ========================================================= */
-
-function updateStatistics(){
-
-  const profit =
-    currentBalance-startBalance;
-
-  const wins =
-    trades.filter(
-      t=>t.win
-    ).length;
-
-  const winRate =
-    trades.length
-      ? wins/trades.length*100
-      : 0;
-
-  document.getElementById("startBalance")
+  document.getElementById("balance")
     .textContent =
-    money(startBalance);
+    "$" + balance.toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    );
 
-  document.getElementById("currentBalance")
-    .textContent =
-    money(currentBalance);
+  document.getElementById("trades")
+    .textContent = trades;
 
-  document.getElementById("tradeCount")
-    .textContent =
-    trades.length;
+  document.getElementById("wins")
+    .textContent = wins;
+
+  document.getElementById("losses")
+    .textContent = losses;
+
+  const rate =
+    trades === 0
+      ? 0
+      : (wins / trades) * 100;
 
   document.getElementById("winRate")
     .textContent =
-    winRate.toFixed(1)+"%";
+    rate.toFixed(1) + "%";
 
-  document.getElementById("totalProfit")
+  document.getElementById("profitLoss")
     .textContent =
-    money(profit);
-
-  document.getElementById("totalProfit")
-    .className =
-    "stat-value " +
-    (profit >= 0 ? "green" : "red");
-
-  document.getElementById("drawdown")
-    .textContent =
-    money(maxDrawdown);
-
-}
-
-
-function money(value){
-
-  const sign =
-    value < 0 ? "-" : "";
-
-  return sign +
+    (profitLoss >= 0 ? "+" : "") +
     "$" +
-    Math.abs(value)
-      .toLocaleString(
-        undefined,
-        {
-          minimumFractionDigits:2,
-          maximumFractionDigits:2
-        }
-      );
+    profitLoss.toFixed(2);
 }
 
+function recordTrade(result) {
 
-/* =========================================================
-   TRADE HISTORY
-   ========================================================= */
+  const direction =
+    document.getElementById("direction").value;
 
-function renderTrades(){
-
-  const box =
-    document.getElementById("tradeList");
-
-  if(!trades.length){
-
-    box.innerHTML =
-      '<div class="empty">No trades recorded yet.</div>';
-
-    return;
-  }
-
-  box.innerHTML =
-    trades
-      .slice()
-      .reverse()
-      .map(t=>{
-
-        return `
-          <div class="trade">
-
-            <div>
-              #${t.number}
-            </div>
-
-            <div>
-              <strong>
-                ${t.pair} ${t.direction}
-              </strong>
-              <br>
-              <span style="color:#788693">
-                Risk ${money(t.risk)}
-              </span>
-            </div>
-
-            <div
-              class="trade-result
-              ${t.win ? "green" : "red"}">
-
-              ${t.win ? "+" : ""}
-              ${money(t.result)}
-
-            </div>
-
-          </div>
-        `;
-
-      })
-      .join("");
-
-}
-
-
-/* =========================================================
-   BALANCE CHANGE
-   ========================================================= */
-
-balanceInput.addEventListener(
-  "change",
-  ()=>{
-
-    startBalance =
-      Number(balanceInput.value) || 10000;
-
-    currentBalance =
-      startBalance;
-
-    peakBalance =
-      startBalance;
-
-    maxDrawdown = 0;
-
-    trades = [];
-
-    updateStatistics();
-    renderTrades();
-
-  }
-);
-
-
-/* =========================================================
-   PAIR CHANGE
-   ========================================================= */
-
-pairSelect.addEventListener(
-  "change",
-  ()=>{
-
-    generateCandles();
-
-  }
-);
-
-
-/* =========================================================
-   TIMEFRAME CHANGE
-   ========================================================= */
-
-timeframe.addEventListener(
-  "change",
-  ()=>{
-
-    chartTimeframe.textContent =
-      timeframe.options[
-        timeframe.selectedIndex
-      ].text;
-
-    drawChart();
-
-  }
-);
-
-
-/* =========================================================
-   CSV IMPORT
-   ========================================================= */
-
-document.getElementById("loadCsvBtn")
-.addEventListener("click",()=>{
-
-  const file =
-    document.getElementById("csvFile")
-      .files[0];
-
-  if(!file){
-
-    alert(
-      "Please choose a CSV file first."
+  const entry =
+    parseFloat(
+      document.getElementById("entry").value
     );
 
+  const sl =
+    parseFloat(
+      document.getElementById("sl").value
+    );
+
+  const tp =
+    parseFloat(
+      document.getElementById("tp").value
+    );
+
+  const risk =
+    parseFloat(
+      document.getElementById("risk").value
+    );
+
+  if (
+    !Number.isFinite(entry) ||
+    !Number.isFinite(sl) ||
+    !Number.isFinite(tp) ||
+    !Number.isFinite(risk) ||
+    risk <= 0
+  ) {
+
+    document.getElementById("tradeResult")
+      .textContent =
+      "Please enter valid Entry, SL, TP and Risk values.";
+
     return;
   }
 
-  const reader =
-    new FileReader();
+  let reward;
 
-  reader.onload = function(event){
+  if (direction === "BUY") {
+    reward =
+      Math.abs(tp - entry) /
+      Math.abs(entry - sl);
+  } else {
+    reward =
+      Math.abs(entry - tp) /
+      Math.abs(sl - entry);
+  }
 
-    try{
+  if (!Number.isFinite(reward)) {
+    reward = 0;
+  }
 
-      const text =
-        event.target.result;
+  let amount;
 
-      const rows =
-        parseCSV(text);
+  if (result === "WIN") {
 
-      if(rows.length < 5){
+    amount = risk * reward;
 
-        alert(
-          "The CSV does not contain enough candle data."
-        );
+    balance += amount;
+    profitLoss += amount;
 
-        return;
-      }
+    wins++;
 
-      candles =
-        rows.map(row=>({
+  } else {
 
-          time:
-            new Date(
-              row.time
-            ),
+    amount = risk;
 
-          open:
-            Number(row.open),
+    balance -= amount;
+    profitLoss -= amount;
 
-          high:
-            Number(row.high),
+    losses++;
+  }
 
-          low:
-            Number(row.low),
+  trades++;
 
-          close:
-            Number(row.close)
+  updateStats();
 
-        }))
-        .filter(c=>
-          !isNaN(c.open) &&
-          !isNaN(c.high) &&
-          !isNaN(c.low) &&
-          !isNaN(c.close)
-        );
+  const rr =
+    reward > 0
+      ? "1:" + reward.toFixed(2)
+      : "N/A";
 
-      if(candles.length < 5){
+  document.getElementById("tradeResult")
+    .innerHTML =
+    "<strong>" +
+    result +
+    "</strong><br>" +
+    "Direction: " +
+    direction +
+    "<br>" +
+    "Risk: $" +
+    risk.toFixed(2) +
+    "<br>" +
+    "Calculated R:R: " +
+    rr +
+    "<br>" +
+    "Result: " +
+    (result === "WIN"
+      ? "+$" + amount.toFixed(2)
+      : "-$" + amount.toFixed(2));
+}
 
-        alert(
-          "Could not read valid OHLC candles."
-        );
+document.getElementById("recordWin")
+.addEventListener("click", () => {
+  recordTrade("WIN");
+});
 
-        return;
-      }
+document.getElementById("recordLoss")
+.addEventListener("click", () => {
+  recordTrade("LOSS");
+});
 
-      replayIndex =
-        Math.min(
-          70,
-          candles.length
-        );
+document.getElementById("loadCsv")
+.addEventListener("click", () => {
 
-      visibleCandles =
-        candles.slice(
-          0,
-          replayIndex
-        );
+  const file =
+    document.getElementById("csvFile").files[0];
 
-      updatePrice();
-      drawChart();
+  if (!file) {
 
-      alert(
-        "Historical data loaded successfully: " +
-        candles.length +
-        " candles."
-      );
+    document.getElementById("fileResult")
+      .textContent =
+      "Choose a CSV historical market-data file first.";
 
-    }catch(error){
+    return;
+  }
 
-      console.error(error);
+  const reader = new FileReader();
 
-      alert(
-        "There was a problem reading this CSV."
-      );
+  reader.onload = function(event) {
 
+    const text = event.target.result;
+
+    const lines =
+      text.split(/\r?\n/)
+      .filter(line => line.trim());
+
+    if (lines.length < 2) {
+
+      document.getElementById("fileResult")
+        .textContent =
+        "The CSV file does not contain enough data.";
+
+      return;
     }
+
+    const header =
+      lines[0]
+      .split(",")
+      .map(x => x.trim().toLowerCase());
+
+    const dateIndex =
+      header.findIndex(x =>
+        ["date", "time", "timestamp", "datetime"]
+        .includes(x)
+      );
+
+    const openIndex =
+      header.indexOf("open");
+
+    const highIndex =
+      header.indexOf("high");
+
+    const lowIndex =
+      header.indexOf("low");
+
+    const closeIndex =
+      header.indexOf("close");
+
+    if (
+      openIndex === -1 ||
+      highIndex === -1 ||
+      lowIndex === -1 ||
+      closeIndex === -1
+    ) {
+
+      document.getElementById("fileResult")
+        .textContent =
+        "CSV must contain Open, High, Low and Close columns.";
+
+      return;
+    }
+
+    const loaded = [];
+
+    for (let i = 1; i < lines.length; i++) {
+
+      const parts =
+        lines[i].split(",");
+
+      const open =
+        parseFloat(parts[openIndex]);
+
+      const high =
+        parseFloat(parts[highIndex]);
+
+      const low =
+        parseFloat(parts[lowIndex]);
+
+      const close =
+        parseFloat(parts[closeIndex]);
+
+      if (
+        Number.isFinite(open) &&
+        Number.isFinite(high) &&
+        Number.isFinite(low) &&
+        Number.isFinite(close)
+      ) {
+
+        let time;
+
+        if (dateIndex !== -1) {
+          time =
+            new Date(parts[dateIndex]).getTime();
+        }
+
+        if (!Number.isFinite(time)) {
+          time =
+            Date.now() +
+            loaded.length * 60000;
+        }
+
+        loaded.push({
+          open,
+          high,
+          low,
+          close,
+          time
+        });
+      }
+    }
+
+    if (!loaded.length) {
+
+      document.getElementById("fileResult")
+        .textContent =
+        "No valid OHLC candles were found.";
+
+      return;
+    }
+
+    candles = loaded;
+
+    replayIndex =
+      Math.min(50, candles.length - 1);
+
+    document.getElementById("fileResult")
+      .textContent =
+      loaded.length +
+      " historical candles loaded successfully.";
+
+    updateReplay();
 
   };
 
   reader.readAsText(file);
-
 });
 
-
-function parseCSV(text){
-
-  const lines =
-    text
-      .trim()
-      .split(/\r?\n/);
-
-  if(lines.length < 2){
-    return [];
-  }
-
-  const headers =
-    lines[0]
-      .split(",")
-      .map(h=>
-        h.trim()
-          .toLowerCase()
-      );
-
-  const timeIndex =
-    headers.findIndex(h=>
-      h==="time" ||
-      h==="date" ||
-      h==="datetime" ||
-      h==="timestamp"
-    );
-
-  const openIndex =
-    headers.indexOf("open");
-
-  const highIndex =
-    headers.indexOf("high");
-
-  const lowIndex =
-    headers.indexOf("low");
-
-  const closeIndex =
-    headers.indexOf("close");
-
-  if(
-    openIndex === -1 ||
-    highIndex === -1 ||
-    lowIndex === -1 ||
-    closeIndex === -1
-  ){
-
-    throw new Error(
-      "Missing OHLC columns"
-    );
-
-  }
-
-  const result = [];
-
-  for(let i=1;i<lines.length;i++){
-
-    if(!lines[i].trim()){
-      continue;
-    }
-
-    const cols =
-      lines[i].split(",");
-
-    result.push({
-
-      time:
-        timeIndex >= 0
-          ? cols[timeIndex]
-          : new Date(
-              Date.now() -
-              (lines.length-i) *
-              15*60*1000
-            ),
-
-      open:
-        cols[openIndex],
-
-      high:
-        cols[highIndex],
-
-      low:
-        cols[lowIndex],
-
-      close:
-        cols[closeIndex]
-
-    });
-
-  }
-
-  return result;
-
-}
-
-
-/* =========================================================
-   START
-   ========================================================= */
-
-startBalance =
-  Number(balanceInput.value);
-
-currentBalance =
-  startBalance;
-
-peakBalance =
-  startBalance;
-
-generateCandles();
-
-setTimeout(
-  resizeCanvas,
-  100
+window.addEventListener(
+  "resize",
+  resizeCanvas
 );
 
-updateStatistics();
-renderTrades();
-
+generateCandles();
+updateStats();
+resizeCanvas();
 </script>
 
 </body>
-  </html>
+</html>
