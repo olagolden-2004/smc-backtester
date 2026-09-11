@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>SMC Backtester</title>
 
 <style>
@@ -33,20 +33,14 @@ button{
   cursor:pointer;
 }
 
-button:active{
-  transform:scale(.98);
-}
-
-/* HEADER */
-
 .header{
-  padding:12px 14px;
+  padding:14px 16px;
   background:#0e151d;
   border-bottom:1px solid #293542;
 }
 
 .logo{
-  font-size:22px;
+  font-size:23px;
   font-weight:800;
 }
 
@@ -56,52 +50,16 @@ button:active{
   font-size:12px;
 }
 
-/* PAGE NAVIGATION */
-
-.topnav{
-  display:flex;
-  gap:6px;
-  padding:7px 9px;
-  background:#0c131b;
-  border-bottom:1px solid #293542;
-  overflow-x:auto;
-  scrollbar-width:none;
-}
-
-.topnav::-webkit-scrollbar{
-  display:none;
-}
-
-.navbtn{
-  flex:1 0 auto;
-  min-width:80px;
-  border:1px solid #344352;
-  border-radius:8px;
-  background:#17212d;
-  color:#edf2f7;
-  padding:9px 11px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.navbtn.active{
-  background:#18324a;
-  border-color:#3d9fff;
-}
-
-/* PAIR CONTROLS */
-
 .controls{
   display:grid;
   grid-template-columns:1fr 110px;
   gap:8px;
-  padding:8px 10px;
+  padding:9px;
   background:#0e151d;
   border-bottom:1px solid #293542;
 }
 
-select,input{
-  width:100%;
+select,input,button{
   border:1px solid #344352;
   border-radius:7px;
   background:#17212d;
@@ -110,7 +68,9 @@ select,input{
   font-size:14px;
 }
 
-/* PAGES */
+button:active{
+  transform:scale(.98);
+}
 
 .main{
   width:100%;
@@ -119,46 +79,23 @@ select,input{
   padding:9px;
 }
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* CARDS */
-
-.card{
+.chart-card,.panel{
   background:#101820;
   border:1px solid #293542;
   border-radius:10px;
   overflow:hidden;
 }
 
-.card-title{
-  padding:13px;
-  border-bottom:1px solid #293542;
-  font-size:17px;
-  font-weight:800;
-}
-
-.card-body{
-  padding:13px;
-}
-
-/* CHART */
-
 .chart-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:11px 12px;
+  padding:11px;
   border-bottom:1px solid #293542;
 }
 
 .pair-title{
-  font-size:19px;
+  font-size:18px;
   font-weight:800;
 }
 
@@ -169,15 +106,48 @@ select,input{
 
 .status{
   color:#28d66f;
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
+}
+
+.toolbar{
+  display:flex;
+  gap:5px;
+  padding:7px;
+  background:#0d141c;
+  border-bottom:1px solid #293542;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+
+.toolbar::-webkit-scrollbar{
+  display:none;
+}
+
+.tool{
+  flex:0 0 auto;
+  white-space:nowrap;
+  padding:8px 10px;
+  font-size:11px;
+}
+
+.tool.active{
+  background:#18324a;
+  border-color:#3d9fff;
+}
+
+.hint{
+  padding:7px 10px;
+  background:#111b25;
+  border-bottom:1px solid #293542;
+  color:#8794a1;
+  font-size:11px;
 }
 
 .chart-wrap{
   position:relative;
   width:100%;
-  height:calc(100vh - 245px);
-  min-height:400px;
+  height:560px;
   background:#0d141b;
   overflow:hidden;
   touch-action:none;
@@ -203,8 +173,6 @@ select,input{
   pointer-events:none;
 }
 
-/* CHART BUTTONS */
-
 .chart-controls{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -213,82 +181,32 @@ select,input{
   border-top:1px solid #293542;
 }
 
-.btn{
-  border:1px solid #344352;
-  border-radius:7px;
-  background:#17212d;
-  color:#edf2f7;
-  padding:10px;
-  font-size:12px;
-  font-weight:700;
-}
-
-.btn.green{
-  background:#117c41;
-  border-color:#20c969;
-}
-
-.btn.danger{
-  background:#5b2025;
-  border-color:#a94149;
-}
-
 .replay{
   padding:0 10px 10px;
   color:#84919e;
   font-size:11px;
 }
 
-/* TOOL PAGE */
-
-.tool-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-}
-
-.tool{
-  border:1px solid #344352;
-  border-radius:8px;
-  background:#17212d;
-  color:#edf2f7;
-  padding:13px 8px;
-  font-size:12px;
-  font-weight:800;
-}
-
-.tool.active{
-  background:#18324a;
-  border-color:#3d9fff;
-}
-
-.tool-info{
+.panel{
   margin-top:10px;
-  padding:11px;
-  background:#17212d;
-  border-radius:8px;
-  color:#929eaa;
-  font-size:12px;
-  line-height:1.6;
+  padding:13px;
 }
 
-.tool-danger{
-  margin-top:10px;
-  width:100%;
+.panel h2{
+  margin:0 0 11px;
+  font-size:16px;
 }
-
-/* STATS */
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
 }
 
 .stat{
   background:#17212d;
-  padding:12px;
-  border-radius:8px;
+  padding:10px;
+  border-radius:7px;
 }
 
 .stat-name{
@@ -298,15 +216,13 @@ select,input{
 
 .stat-value{
   margin-top:5px;
-  font-size:17px;
+  font-size:15px;
   font-weight:800;
 }
 
-/* FORMS */
-
-.form-grid{
+.trade-form{
   display:grid;
-  gap:10px;
+  gap:8px;
 }
 
 label{
@@ -316,29 +232,9 @@ label{
   font-size:11px;
 }
 
-.direction-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.direction-btn{
-  border:1px solid #344352;
-  border-radius:7px;
-  background:#17212d;
-  color:#edf2f7;
-  padding:11px;
-  font-weight:800;
-}
-
-.direction-btn.active{
-  background:#18324a;
-  border-color:#3d9fff;
-}
-
 .result{
   margin-top:10px;
-  padding:11px;
+  padding:10px;
   border-radius:7px;
   background:#17212d;
   color:#cdd5dd;
@@ -352,38 +248,51 @@ label{
   line-height:1.6;
 }
 
-/* DESKTOP */
+.green{
+  background:#117c41;
+  border-color:#20c969;
+}
 
-@media(min-width:800px){
+.secondary{
+  background:#17212d;
+}
 
-  .tool-grid{
-    grid-template-columns:repeat(4,1fr);
+.file-box{
+  margin-top:10px;
+  padding:11px;
+  background:#0d141c;
+  border:1px dashed #344352;
+  border-radius:8px;
+}
+
+.file-name{
+  margin-top:7px;
+  color:#8e9ba8;
+  font-size:11px;
+}
+
+@media(max-width:650px){
+  .chart-wrap{
+    height:520px;
+  }
+
+  .chart-controls{
+    grid-template-columns:1fr 1fr;
   }
 
   .stats{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .form-grid{
     grid-template-columns:repeat(2,1fr);
   }
-
-  .form-full{
-    grid-column:1/-1;
-  }
-
 }
-
-/* LANDSCAPE */
 
 @media(orientation:landscape){
 
   .header{
-    padding:7px 12px;
+    padding:7px 11px;
   }
 
   .logo{
-    font-size:18px;
+    font-size:17px;
   }
 
   .subtitle{
@@ -391,21 +300,26 @@ label{
   }
 
   .controls{
-    padding:6px 10px;
+    padding:6px 9px;
   }
 
   .main{
-    padding:7px;
+    padding:6px;
   }
 
   .chart-wrap{
     height:calc(100vh - 175px);
-    min-height:280px;
+    min-height:320px;
   }
 
-}
+  .toolbar{
+    padding:5px;
+  }
 
-/* SHORT LANDSCAPE PHONE */
+  .hint{
+    padding:5px 8px;
+  }
+}
 
 @media(orientation:landscape) and (max-height:500px){
 
@@ -415,23 +329,12 @@ label{
 
   .chart-wrap{
     height:calc(100vh - 105px);
-    min-height:230px;
+    min-height:250px;
   }
 
-}
-
-/* SMALL PHONE */
-
-@media(max-width:500px){
-
-  .chart-controls{
-    grid-template-columns:1fr 1fr;
+  .panel{
+    display:none;
   }
-
-  .tool-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
 }
 </style>
 </head>
@@ -440,32 +343,10 @@ label{
 
 <header class="header">
   <div class="logo">📊 SMC Backtester</div>
-  <div class="subtitle">Manual Smart Money Concepts Backtesting</div>
+  <div class="subtitle">
+    Manual Smart Money Concepts Backtesting
+  </div>
 </header>
-
-<!-- TOP NAVIGATION -->
-
-<nav class="topnav">
-
-  <button class="navbtn active" data-page="chartPage">
-    📈 Chart
-  </button>
-
-  <button class="navbtn" data-page="toolsPage">
-    🛠 Tools
-  </button>
-
-  <button class="navbtn" data-page="backtestPage">
-    📊 Backtest
-  </button>
-
-  <button class="navbtn" data-page="dataPage">
-    📁 Data
-  </button>
-
-</nav>
-
-<!-- PAIR / TIMEFRAME -->
 
 <section class="controls">
 
@@ -495,550 +376,342 @@ label{
 
 <main class="main">
 
-<!-- =====================================================
-     CHART PAGE
-===================================================== -->
+<section class="chart-card">
 
-<section id="chartPage" class="page active">
+  <div class="chart-header">
 
-  <div class="card">
-
-    <div class="chart-header">
-
-      <div>
-        <span class="pair-title" id="pairTitle">GBPUSD</span>
-        <span class="time-title" id="timeTitle">15M</span>
-      </div>
-
-      <div class="status">
-        ● MANUAL MODE
-      </div>
-
+    <div>
+      <span class="pair-title" id="pairTitle">GBPUSD</span>
+      <span class="time-title" id="timeTitle">15M</span>
     </div>
 
-    <div class="chart-wrap" id="chartWrap">
+    <div class="status">● BACKTEST MODE</div>
 
-      <canvas id="chart"></canvas>
+  </div>
 
-      <div class="price-label" id="priceLabel">
-        1.25000
-      </div>
+  <div class="toolbar">
 
+    <button class="tool active" data-tool="select">
+      🖱 Select
+    </button>
+
+    <button class="tool" data-tool="pan">
+      ✋ Pan
+    </button>
+
+    <button class="tool" data-tool="trend">
+      📈 Trend
+    </button>
+
+    <button class="tool" data-tool="horizontal">
+      ➖ Horizontal
+    </button>
+
+    <button class="tool" data-tool="ob">
+      🟦 Order Block
+    </button>
+
+    <button class="tool" data-tool="fvg">
+      🟨 FVG
+    </button>
+
+    <button class="tool" data-tool="bos">
+      🔵 BOS
+    </button>
+
+    <button class="tool" data-tool="choch">
+      🟣 CHOCH
+    </button>
+
+    <button class="tool" data-tool="liquidity">
+      💧 Liquidity
+    </button>
+
+    <button class="tool" data-tool="text">
+      📝 Text
+    </button>
+
+    <button class="tool" data-tool="delete">
+      🗑 Delete
+    </button>
+
+    <button class="tool" id="clearDrawings">
+      🧹 Clear
+    </button>
+
+  </div>
+
+  <div class="hint" id="toolHint">
+    Select a drawing tool. Drawings stay attached to candles and prices.
+  </div>
+
+  <div class="chart-wrap" id="chartWrap">
+
+    <canvas id="chart"></canvas>
+
+    <div class="price-label" id="priceLabel">
+      1.25000
     </div>
 
-    <div class="chart-controls">
+  </div>
 
-      <button class="btn" id="previousBtn">
-        ◀ Previous
-      </button>
+  <div class="chart-controls">
 
-      <button class="btn green" id="nextBtn">
-        Next Candle ▶
-      </button>
+    <button class="secondary" id="previousBtn">
+      ◀ Previous
+    </button>
 
-      <button class="btn" id="resetBtn">
-        ↻ Reset
-      </button>
+    <button class="green" id="nextBtn">
+      Next Candle ▶
+    </button>
 
-      <button class="btn" id="fitBtn">
-        ⛶ Fit
-      </button>
+    <button class="secondary" id="resetBtn">
+      ↻ Reset
+    </button>
 
+    <button class="secondary" id="fitBtn">
+      ⛶ Fit
+    </button>
+
+  </div>
+
+  <div class="replay" id="replayTime">
+    Replay candle:
+  </div>
+
+</section>
+
+<section class="panel">
+
+  <h2>Backtest Statistics</h2>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="stat-name">Account Balance</div>
+      <div class="stat-value" id="balance">$10,000.00</div>
     </div>
 
-    <div class="replay" id="replayTime">
-      Replay candle:
+    <div class="stat">
+      <div class="stat-name">Trades</div>
+      <div class="stat-value" id="trades">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-name">Wins</div>
+      <div class="stat-value" id="wins">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-name">Losses</div>
+      <div class="stat-value" id="losses">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-name">Win Rate</div>
+      <div class="stat-value" id="winRate">0.0%</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-name">Profit / Loss</div>
+      <div class="stat-value" id="profitLoss">+$0.00</div>
     </div>
 
   </div>
 
 </section>
 
+<section class="panel">
 
-<!-- =====================================================
-     TOOLS PAGE
-===================================================== -->
+  <h2>📝 Record Backtest Trade</h2>
 
-<section id="toolsPage" class="page">
+  <div class="trade-form">
 
-  <div class="card">
-
-    <div class="card-title">
-      🛠 Manual SMC Drawing Tools
+    <div>
+      <label>Direction</label>
+      <select id="direction">
+        <option value="BUY">BUY</option>
+        <option value="SELL">SELL</option>
+      </select>
     </div>
 
-    <div class="card-body">
-
-      <div class="tool-grid">
-
-        <button class="tool active" data-tool="select">
-          🖱 Select
-        </button>
-
-        <button class="tool" data-tool="pan">
-          ✋ Pan
-        </button>
-
-        <button class="tool" data-tool="trend">
-          📈 Trend Line
-        </button>
-
-        <button class="tool" data-tool="horizontal">
-          ➖ Horizontal
-        </button>
-
-        <button class="tool" data-tool="ob">
-          🟦 Order Block
-        </button>
-
-        <button class="tool" data-tool="fvg">
-          🟨 FVG
-        </button>
-
-        <button class="tool" data-tool="bos">
-          🔵 BOS
-        </button>
-
-        <button class="tool" data-tool="choch">
-          🟣 CHOCH
-        </button>
-
-        <button class="tool" data-tool="liquidity">
-          💧 Liquidity
-        </button>
-
-        <button class="tool" data-tool="text">
-          📝 Text
-        </button>
-
-        <button class="tool" data-tool="delete">
-          🗑 Delete
-        </button>
-
-      </div>
-
-      <div class="tool-info" id="toolHint">
-        Select a drawing tool. Drawings are attached to the
-        actual candle and price location.
-      </div>
-
-      <button class="btn danger tool-danger" id="clearDrawings">
-        🧹 Clear All Drawings
-      </button>
-
+    <div>
+      <label>Entry Price</label>
+      <input id="entry" type="number" step="0.00001" placeholder="1.25000">
     </div>
 
+    <div>
+      <label>Stop Loss</label>
+      <input id="sl" type="number" step="0.00001" placeholder="1.24800">
+    </div>
+
+    <div>
+      <label>Take Profit</label>
+      <input id="tp" type="number" step="0.00001" placeholder="1.25400">
+    </div>
+
+    <div>
+      <label>Risk Per Trade ($)</label>
+      <input id="risk" type="number" value="100" min="0">
+    </div>
+
+    <button class="green" id="recordWin">
+      Record WIN
+    </button>
+
+    <button class="secondary" id="recordLoss">
+      Record LOSS
+    </button>
+
+  </div>
+
+  <div class="result" id="tradeResult">
+    Enter your trade information and record the result.
   </div>
 
 </section>
 
+<section class="panel">
 
-<!-- =====================================================
-     BACKTEST PAGE
-===================================================== -->
+  <h2>📁 Historical Market Data</h2>
 
-<section id="backtestPage" class="page">
+  <div class="file-note">
 
-  <div class="card">
+    Load a real historical OHLC CSV file.
+    The data is kept inside your browser and can be replayed candle-by-candle.
 
-    <div class="card-title">
-      📊 Backtest Statistics
-    </div>
+    <br><br>
 
-    <div class="card-body">
+    Your CSV should contain these columns:
 
-      <div class="stats">
-
-        <div class="stat">
-          <div class="stat-name">Account Balance</div>
-          <div class="stat-value" id="balance">
-            $10,000.00
-          </div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-name">Trades</div>
-          <div class="stat-value" id="trades">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-name">Wins</div>
-          <div class="stat-value" id="wins">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-name">Losses</div>
-          <div class="stat-value" id="losses">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-name">Win Rate</div>
-          <div class="stat-value" id="winRate">0.0%</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-name">Profit / Loss</div>
-          <div class="stat-value" id="profitLoss">
-            +$0.00
-          </div>
-        </div>
-
-      </div>
-
-    </div>
+    <strong>Date/Time, Open, High, Low, Close</strong>
 
   </div>
 
-  <br>
+  <div class="file-box">
 
-  <div class="card">
+    <input type="file" id="csvFile" accept=".csv">
 
-    <div class="card-title">
-      📝 Record Backtest Trade
+    <div class="file-name" id="fileName">
+      No file selected
     </div>
 
-    <div class="card-body">
+    <br>
 
-      <div class="form-grid">
-
-        <div class="form-full">
-
-          <label>Direction</label>
-
-          <div class="direction-grid">
-
-            <button
-              class="direction-btn active"
-              id="buyBtn"
-            >
-              BUY
-            </button>
-
-            <button
-              class="direction-btn"
-              id="sellBtn"
-            >
-              SELL
-            </button>
-
-          </div>
-
-        </div>
-
-        <div>
-          <label>Entry Price</label>
-
-          <input
-            id="entry"
-            type="number"
-            step="0.00001"
-            placeholder="1.25000"
-          >
-        </div>
-
-        <div>
-          <label>Stop Loss</label>
-
-          <input
-            id="sl"
-            type="number"
-            step="0.00001"
-            placeholder="1.24800"
-          >
-        </div>
-
-        <div>
-          <label>Take Profit</label>
-
-          <input
-            id="tp"
-            type="number"
-            step="0.00001"
-            placeholder="1.25400"
-          >
-        </div>
-
-        <div>
-          <label>Risk Per Trade ($)</label>
-
-          <input
-            id="risk"
-            type="number"
-            value="100"
-            min="0"
-            step="0.01"
-          >
-        </div>
-
-        <button
-          class="btn green"
-          id="recordWin"
-        >
-          Record WIN
-        </button>
-
-        <button
-          class="btn"
-          id="recordLoss"
-        >
-          Record LOSS
-        </button>
-
-      </div>
-
-      <div class="result" id="tradeResult">
-        Enter your trade information and record the result.
-      </div>
-
-    </div>
+    <button class="green" id="loadCsv">
+      Load Historical Data
+    </button>
 
   </div>
 
-</section>
-
-
-<!-- =====================================================
-     DATA PAGE
-===================================================== -->
-
-<section id="dataPage" class="page">
-
-  <div class="card">
-
-    <div class="card-title">
-      📁 Historical Market Data
-    </div>
-
-    <div class="card-body">
-
-      <div class="file-note">
-
-        Load your own historical OHLC CSV file.
-        The candles will then be replayed candle-by-candle.
-
-        <br><br>
-
-        Required columns:
-
-        <strong>
-          Open, High, Low, Close
-        </strong>
-
-        <br>
-
-        Optional time column:
-
-        <strong>
-          Date, Time, Timestamp or Datetime
-        </strong>
-
-      </div>
-
-      <br>
-
-      <input
-        type="file"
-        id="csvFile"
-        accept=".csv"
-      >
-
-      <br><br>
-
-      <button
-        class="btn green"
-        id="loadCsv"
-      >
-        Load Historical Data
-      </button>
-
-      <div class="result" id="fileResult">
-        No historical data loaded.
-      </div>
-
-    </div>
-
+  <div class="result" id="fileResult">
+    No historical data loaded.
   </div>
 
 </section>
 
 </main>
 
-
 <script>
 
 /* =========================================================
    SMC BACKTESTER
-   MANUAL DRAWING + CANDLE REPLAY
+   REAL CSV HISTORICAL DATA + MANUAL DRAWINGS
 ========================================================= */
 
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const canvas =
-document.getElementById("chart");
-
-const ctx =
-canvas.getContext("2d");
-
-const chartWrap =
-document.getElementById("chartWrap");
-
-const priceLabel =
-document.getElementById("priceLabel");
-
-
-/* =========================================================
-   STATE
-========================================================= */
+const canvas = document.getElementById("chart");
+const ctx = canvas.getContext("2d");
+const chartWrap = document.getElementById("chartWrap");
+const priceLabel = document.getElementById("priceLabel");
 
 let candles = [];
 
 let replayIndex = 35;
 
 let visibleStart = 0;
-
 let visibleCount = 70;
 
 let minPrice = 1.24;
-
 let maxPrice = 1.26;
 
 let chartWidth = 0;
-
 let chartHeight = 0;
 
 let selectedTool = "select";
 
 let drawings = [];
-
 let currentDrawing = null;
-
 let isDrawing = false;
 
 let panStart = null;
 
 let balance = 10000;
-
 let trades = 0;
-
 let wins = 0;
-
 let losses = 0;
-
 let profitLoss = 0;
-
-let direction = "BUY";
 
 
 /* =========================================================
-   TOOL DESCRIPTIONS
+   TOOL HELP
 ========================================================= */
 
 const toolNames = {
 
   select:
-  "Select mode. Drawings stay attached to the candle and price where you placed them.",
+  "Select mode. Your drawings stay attached to their candle and price.",
 
   pan:
-  "Pan mode. Drag the chart horizontally without moving drawings away from their market location.",
+  "Pan mode. Drag the chart horizontally. Drawings stay attached to candles.",
 
   trend:
-  "Trend Line. Drag from one candle/price point to another.",
+  "Trend Line: drag from one candle/price to another.",
 
   horizontal:
-  "Horizontal Line. Tap the exact price level.",
+  "Horizontal Line: tap the exact price level.",
 
   ob:
-  "Order Block. Drag across the candle area and price zone you want to mark.",
+  "Order Block: drag around the exact candle and price zone.",
 
   fvg:
-  "FVG. Drag across the exact Fair Value Gap area.",
+  "FVG: drag around the exact Fair Value Gap.",
 
   bos:
-  "BOS. Drag from the structure level toward the candle that broke it.",
+  "BOS: drag from the structure level to the break candle.",
 
   choch:
-  "CHOCH. Drag from the structure level toward the candle that changed structure.",
+  "CHOCH: drag from the structure level to the break candle.",
 
   liquidity:
-  "Liquidity. Tap the exact liquidity price level.",
+  "Liquidity: tap the exact liquidity price.",
 
   text:
-  "Text. Tap the chart and enter your own label.",
+  "Text: tap the chart and enter your label.",
 
   delete:
-  "Delete. Tap a drawing to remove it."
+  "Delete: tap a drawing to remove it."
 
 };
 
 
 /* =========================================================
-   PAGE NAVIGATION
-========================================================= */
-
-document
-.querySelectorAll(".navbtn")
-.forEach(button => {
-
-  button.addEventListener("click", () => {
-
-    document
-    .querySelectorAll(".navbtn")
-    .forEach(b => b.classList.remove("active"));
-
-    button.classList.add("active");
-
-    document
-    .querySelectorAll(".page")
-    .forEach(page => page.classList.remove("active"));
-
-    document
-    .getElementById(button.dataset.page)
-    .classList.add("active");
-
-    setTimeout(() => {
-      resizeCanvas();
-    }, 50);
-
-  });
-
-});
-
-
-/* =========================================================
-   RESIZE CANVAS
+   RESIZE
 ========================================================= */
 
 function resizeCanvas(){
 
-  const rect =
-  chartWrap.getBoundingClientRect();
+  const rect = chartWrap.getBoundingClientRect();
 
-  if(!rect.width || !rect.height)
-    return;
+  const dpr = window.devicePixelRatio || 1;
 
-  const dpr =
-  window.devicePixelRatio || 1;
+  chartWidth = rect.width;
+  chartHeight = rect.height;
 
-  chartWidth =
-  rect.width;
+  canvas.width = Math.floor(chartWidth * dpr);
+  canvas.height = Math.floor(chartHeight * dpr);
 
-  chartHeight =
-  rect.height;
-
-  canvas.width =
-  Math.floor(chartWidth * dpr);
-
-  canvas.height =
-  Math.floor(chartHeight * dpr);
-
-  canvas.style.width =
-  chartWidth + "px";
-
-  canvas.style.height =
-  chartHeight + "px";
+  canvas.style.width = chartWidth + "px";
+  canvas.style.height = chartHeight + "px";
 
   ctx.setTransform(
     dpr,
@@ -1050,144 +723,149 @@ function resizeCanvas(){
   );
 
   drawChart();
-
 }
 
 
 /* =========================================================
-   DEMO CANDLE DATA
+   DEMO CANDLES
+   USED ONLY UNTIL REAL CSV IS LOADED
 ========================================================= */
 
-function generateCandles(){
+function generateDemoCandles(){
 
   candles = [];
 
   let price = 1.25000;
 
   const start =
-  new Date(
-    "2025-01-02T00:00:00Z"
-  ).getTime();
+    new Date("2025-01-02T00:00:00Z").getTime();
 
-  for(let i = 0; i < 500; i++){
+  for(let i=0;i<300;i++){
 
     const open = price;
 
     let movement;
 
-    if(i < 80){
+    if(i < 50){
 
       movement =
-      (Math.random() - .48) * .0012;
+        (Math.random() - .48) * .0012;
 
-    }else if(i < 160){
-
-      movement =
-      .00025 +
-      (Math.random() - .5) * .0008;
-
-    }else if(i < 240){
+    }else if(i < 100){
 
       movement =
-      -.00028 +
-      (Math.random() - .5) * .001;
+        .00025 +
+        (Math.random() - .5) * .0008;
 
-    }else if(i < 330){
-
-      movement =
-      .00035 +
-      (Math.random() - .5) * .001;
-
-    }else if(i < 410){
+    }else if(i < 150){
 
       movement =
-      -.00025 +
-      (Math.random() - .5) * .001;
+        -.00028 +
+        (Math.random() - .5) * .001;
+
+    }else if(i < 210){
+
+      movement =
+        .00035 +
+        (Math.random() - .5) * .001;
+
+    }else if(i < 255){
+
+      movement =
+        -.00025 +
+        (Math.random() - .5) * .001;
 
     }else{
 
       movement =
-      .00008 +
-      (Math.random() - .5) * .001;
+        .00008 +
+        (Math.random() - .5) * .001;
 
     }
 
-    const close =
-    open + movement;
+    const close = open + movement;
 
     const high =
-    Math.max(open,close) +
-    Math.random() * .0007;
+      Math.max(open,close) +
+      Math.random()*.0007;
 
     const low =
-    Math.min(open,close) -
-    Math.random() * .0007;
+      Math.min(open,close) -
+      Math.random()*.0007;
 
     candles.push({
-
       open,
       high,
       low,
       close,
-
       time:
-      start +
-      i * 15 * 60 * 1000
-
+        start +
+        i * 15 * 60 * 1000
     });
 
     price = close;
-
   }
 
+  resetReplayState();
+}
+
+
+/* =========================================================
+   RESET REPLAY STATE
+========================================================= */
+
+function resetReplayState(){
+
   replayIndex =
-  Math.min(35,candles.length-1);
+    Math.min(35,candles.length-1);
 
   visibleCount =
-  Math.min(70,candles.length);
+    Math.min(70,candles.length);
 
   visibleStart = 0;
 
   drawings = [];
 
   updateReplay();
-
 }
 
 
 /* =========================================================
-   REPLAY LIMITS
+   REPLAY END
 ========================================================= */
 
 function getReplayEnd(){
 
   return Math.min(
     replayIndex,
-    candles.length - 1
+    candles.length-1
   );
-
 }
 
+
+/* =========================================================
+   VISIBLE END
+========================================================= */
 
 function getVisibleEnd(){
 
   return Math.min(
     getReplayEnd(),
-    visibleStart +
-    visibleCount -
-    1
+    visibleStart + visibleCount - 1
   );
-
 }
 
+
+/* =========================================================
+   VISIBLE CANDLES
+========================================================= */
 
 function getVisibleCandles(){
 
   if(!candles.length)
     return [];
 
-  const end =
-  getVisibleEnd();
+  const end = getVisibleEnd();
 
   if(end < visibleStart)
     return [];
@@ -1196,7 +874,6 @@ function getVisibleCandles(){
     visibleStart,
     end + 1
   );
-
 }
 
 
@@ -1206,90 +883,76 @@ function getVisibleCandles(){
 
 function calculateRange(){
 
-  const visible =
-  getVisibleCandles();
+  const visible = getVisibleCandles();
 
   if(!visible.length)
     return;
 
   minPrice = Infinity;
-
   maxPrice = -Infinity;
 
-  visible.forEach(candle => {
+  visible.forEach(c => {
 
     minPrice =
-    Math.min(
-      minPrice,
-      candle.low
-    );
+      Math.min(minPrice,c.low);
 
     maxPrice =
-    Math.max(
-      maxPrice,
-      candle.high
-    );
+      Math.max(maxPrice,c.high);
 
   });
 
   const range =
-  maxPrice - minPrice;
+    maxPrice - minPrice;
 
   const padding =
-  range > 0
-  ? range * .10
-  : .001;
+    range > 0
+    ? range * .10
+    : .001;
 
   minPrice -= padding;
-
   maxPrice += padding;
-
 }
 
 
 /* =========================================================
-   CANDLE X POSITION
+   INDEX TO X
 ========================================================= */
 
 function candleIndexToX(index){
 
   const position =
-  index - visibleStart;
+    index - visibleStart;
 
   const slot =
-  chartWidth / visibleCount;
+    chartWidth / visibleCount;
 
-  return (
-    position * slot
-  ) + slot / 2;
-
+  return position * slot + slot / 2;
 }
 
 
 /* =========================================================
-   X TO CANDLE INDEX
+   X TO INDEX
 ========================================================= */
 
 function xToCandleIndex(x){
 
   const slot =
-  chartWidth / visibleCount;
+    chartWidth / visibleCount;
 
   let index =
-  Math.floor(x / slot) +
-  visibleStart;
+    Math.floor(x / slot) +
+    visibleStart;
 
   index =
-  Math.max(
-    0,
-    Math.min(
-      replayIndex,
-      index
-    )
-  );
+    Math.max(
+      0,
+      Math.min(
+        replayIndex,
+        index
+      )
+    );
 
   return index;
-
 }
 
 
@@ -1300,14 +963,14 @@ function xToCandleIndex(x){
 function priceToY(price){
 
   if(maxPrice === minPrice)
-    return chartHeight / 2;
+    return chartHeight/2;
 
   return chartHeight -
-  (
-    (price - minPrice) /
-    (maxPrice - minPrice)
-  ) * chartHeight;
-
+    (
+      (price-minPrice) /
+      (maxPrice-minPrice)
+    ) *
+    chartHeight;
 }
 
 
@@ -1318,43 +981,35 @@ function priceToY(price){
 function yToPrice(y){
 
   return minPrice +
-  (
-    (chartHeight - y) /
-    chartHeight
-  ) *
-  (maxPrice - minPrice);
-
+    (
+      (chartHeight-y) /
+      chartHeight
+    ) *
+    (maxPrice-minPrice);
 }
 
 
 /* =========================================================
-   POINTER LOCATION
+   POINTER POSITION
 ========================================================= */
 
 function getPoint(event){
 
   const rect =
-  canvas.getBoundingClientRect();
+    canvas.getBoundingClientRect();
 
   const x =
-  event.clientX - rect.left;
+    event.clientX - rect.left;
 
   const y =
-  event.clientY - rect.top;
+    event.clientY - rect.top;
 
   return {
-
     x,
     y,
-
-    candleIndex:
-    xToCandleIndex(x),
-
-    price:
-    yToPrice(y)
-
+    candleIndex:xToCandleIndex(x),
+    price:yToPrice(y)
   };
-
 }
 
 
@@ -1367,14 +1022,14 @@ function drawGrid(){
   ctx.save();
 
   ctx.strokeStyle =
-  "rgba(92,110,125,.16)";
+    "rgba(92,110,125,.16)";
 
   ctx.lineWidth = 1;
 
   for(let i=1;i<8;i++){
 
     const y =
-    chartHeight * i / 8;
+      chartHeight*i/8;
 
     ctx.beginPath();
 
@@ -1382,13 +1037,12 @@ function drawGrid(){
     ctx.lineTo(chartWidth,y);
 
     ctx.stroke();
-
   }
 
   for(let i=1;i<10;i++){
 
     const x =
-    chartWidth * i / 10;
+      chartWidth*i/10;
 
     ctx.beginPath();
 
@@ -1396,11 +1050,9 @@ function drawGrid(){
     ctx.lineTo(x,chartHeight);
 
     ctx.stroke();
-
   }
 
   ctx.restore();
-
 }
 
 
@@ -1412,33 +1064,26 @@ function drawPriceScale(){
 
   ctx.save();
 
-  ctx.font =
-  "11px Arial";
-
-  ctx.fillStyle =
-  "#788692";
-
-  ctx.textAlign =
-  "right";
+  ctx.font = "11px Arial";
+  ctx.fillStyle = "#788692";
+  ctx.textAlign = "right";
 
   for(let i=0;i<=8;i++){
 
     const y =
-    chartHeight * i / 8;
+      chartHeight*i/8;
 
     const price =
-    yToPrice(y);
+      yToPrice(y);
 
     ctx.fillText(
       price.toFixed(5),
-      chartWidth - 5,
-      Math.max(11,y - 3)
+      chartWidth-5,
+      Math.max(12,y-3)
     );
-
   }
 
   ctx.restore();
-
 }
 
 
@@ -1453,147 +1098,135 @@ function drawTimeScale(){
 
   ctx.save();
 
-  ctx.font =
-  "10px Arial";
-
-  ctx.fillStyle =
-  "#788692";
-
-  ctx.textAlign =
-  "center";
+  ctx.font = "10px Arial";
+  ctx.fillStyle = "#788692";
+  ctx.textAlign = "center";
 
   const step =
-  Math.max(
-    1,
-    Math.floor(visibleCount / 7)
-  );
+    Math.max(
+      1,
+      Math.floor(visibleCount/7)
+    );
 
   for(
-    let index = visibleStart;
-    index <= getVisibleEnd();
-    index += step
+    let index=visibleStart;
+    index<=getVisibleEnd();
+    index+=step
   ){
 
-    const candle =
-    candles[index];
+    const candle = candles[index];
 
     if(!candle)
       continue;
 
     const x =
-    candleIndexToX(index);
+      candleIndexToX(index);
 
     const date =
-    new Date(candle.time);
+      new Date(candle.time);
 
     const label =
-    date.toLocaleDateString(
-      "en-GB",
-      {
-        day:"2-digit",
-        month:"short"
-      }
-    );
+      date.toLocaleDateString(
+        "en-GB",
+        {
+          day:"2-digit",
+          month:"short"
+        }
+      );
 
     ctx.fillText(
       label,
       x,
-      chartHeight - 6
+      chartHeight-6
     );
-
   }
 
   ctx.restore();
-
 }
 
 
 /* =========================================================
-   DRAW CANDLES
+   CANDLES
 ========================================================= */
 
 function drawCandles(){
 
   const visible =
-  getVisibleCandles();
+    getVisibleCandles();
 
   if(!visible.length)
     return;
 
   const slot =
-  chartWidth / visibleCount;
+    chartWidth / visibleCount;
 
   const candleWidth =
-  Math.max(
-    2,
-    Math.min(
-      18,
-      slot * .62
-    )
-  );
+    Math.max(
+      2,
+      Math.min(
+        18,
+        slot*.62
+      )
+    );
 
-  visible.forEach(
-    (candle,localIndex) => {
+  visible.forEach((candle,localIndex)=>{
 
-      const index =
+    const index =
       visibleStart + localIndex;
 
-      const x =
+    const x =
       candleIndexToX(index);
 
-      const openY =
+    const openY =
       priceToY(candle.open);
 
-      const closeY =
+    const closeY =
       priceToY(candle.close);
 
-      const highY =
+    const highY =
       priceToY(candle.high);
 
-      const lowY =
+    const lowY =
       priceToY(candle.low);
 
-      const bullish =
+    const bullish =
       candle.close >= candle.open;
 
-      ctx.beginPath();
+    ctx.beginPath();
 
-      ctx.strokeStyle =
+    ctx.strokeStyle =
       bullish
       ? "#28d66f"
       : "#ef5059";
 
-      ctx.lineWidth = 1;
+    ctx.lineWidth = 1;
 
-      ctx.moveTo(x,highY);
-      ctx.lineTo(x,lowY);
+    ctx.moveTo(x,highY);
+    ctx.lineTo(x,lowY);
 
-      ctx.stroke();
+    ctx.stroke();
 
-      const bodyTop =
+    const bodyTop =
       Math.min(openY,closeY);
 
-      const bodyHeight =
+    const bodyHeight =
       Math.max(
         1,
         Math.abs(closeY-openY)
       );
 
-      ctx.fillStyle =
+    ctx.fillStyle =
       bullish
       ? "#21c968"
       : "#e84c55";
 
-      ctx.fillRect(
-        x - candleWidth/2,
-        bodyTop,
-        candleWidth,
-        bodyHeight
-      );
-
-    }
-  );
-
+    ctx.fillRect(
+      x-candleWidth/2,
+      bodyTop,
+      candleWidth,
+      bodyHeight
+    );
+  });
 }
 
 
@@ -1610,14 +1243,15 @@ function drawReplayMarker(){
     return;
 
   const x =
-  candleIndexToX(replayIndex);
+    candleIndexToX(replayIndex);
 
   ctx.save();
 
   ctx.strokeStyle =
-  "rgba(255,255,255,.35)";
+    "rgba(255,255,255,.35)";
 
   ctx.setLineDash([4,4]);
+  ctx.lineWidth = 1;
 
   ctx.beginPath();
 
@@ -1628,14 +1262,9 @@ function drawReplayMarker(){
 
   ctx.setLineDash([]);
 
-  ctx.fillStyle =
-  "#fff";
-
-  ctx.font =
-  "bold 10px Arial";
-
-  ctx.textAlign =
-  "center";
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 10px Arial";
+  ctx.textAlign = "center";
 
   ctx.fillText(
     "REPLAY",
@@ -1644,16 +1273,245 @@ function drawReplayMarker(){
   );
 
   ctx.restore();
-
 }
 
 
 /* =========================================================
-   DRAW LINE
+   DRAWINGS
+========================================================= */
+
+function drawDrawings(){
+
+  drawings.forEach((d,index)=>{
+
+    drawAnchoredDrawing(d,index);
+
+  });
+}
+
+
+/* =========================================================
+   ANCHORED DRAWING
+========================================================= */
+
+function drawAnchoredDrawing(d,index){
+
+  if(d.type==="trend"){
+
+    drawLine(
+      candleIndexToX(d.startIndex),
+      priceToY(d.startPrice),
+      candleIndexToX(d.endIndex),
+      priceToY(d.endPrice),
+      "#4ba7ff",
+      2
+    );
+  }
+
+  if(d.type==="horizontal"){
+
+    const y =
+      priceToY(d.startPrice);
+
+    drawLine(
+      0,y,
+      chartWidth,y,
+      "#b9c5d0",
+      1
+    );
+  }
+
+  if(d.type==="liquidity"){
+
+    const y =
+      priceToY(d.startPrice);
+
+    drawDashedLine(
+      0,y,
+      chartWidth,y,
+      "#35d8e5",
+      2
+    );
+
+    drawText(
+      "LIQUIDITY",
+      8,
+      y-7,
+      "#35d8e5"
+    );
+  }
+
+  if(d.type==="ob"){
+
+    drawRectangle(
+      candleIndexToX(d.startIndex),
+      priceToY(d.startPrice),
+      candleIndexToX(d.endIndex),
+      priceToY(d.endPrice),
+      "rgba(45,125,255,.17)",
+      "#3d92ff"
+    );
+
+    drawText(
+      "ORDER BLOCK",
+      Math.min(
+        candleIndexToX(d.startIndex),
+        candleIndexToX(d.endIndex)
+      )+5,
+      Math.min(
+        priceToY(d.startPrice),
+        priceToY(d.endPrice)
+      )+15,
+      "#4a9dff"
+    );
+  }
+
+  if(d.type==="fvg"){
+
+    drawRectangle(
+      candleIndexToX(d.startIndex),
+      priceToY(d.startPrice),
+      candleIndexToX(d.endIndex),
+      priceToY(d.endPrice),
+      "rgba(245,201,61,.15)",
+      "#efc83f"
+    );
+
+    drawText(
+      "FVG",
+      Math.min(
+        candleIndexToX(d.startIndex),
+        candleIndexToX(d.endIndex)
+      )+5,
+      Math.min(
+        priceToY(d.startPrice),
+        priceToY(d.endPrice)
+      )+15,
+      "#efc83f"
+    );
+  }
+
+  if(d.type==="bos"){
+
+    drawStructure(
+      d,
+      "#3d9cff",
+      "BOS"
+    );
+  }
+
+  if(d.type==="choch"){
+
+    drawStructure(
+      d,
+      "#a96cff",
+      "CHOCH"
+    );
+  }
+
+  if(d.type==="text"){
+
+    drawText(
+      d.text,
+      candleIndexToX(d.startIndex),
+      priceToY(d.startPrice),
+      "#fff"
+    );
+  }
+}
+
+
+/* =========================================================
+   STRUCTURE
+========================================================= */
+
+function drawStructure(d,lineColor,label){
+
+  const x1 =
+    candleIndexToX(d.startIndex);
+
+  const x2 =
+    candleIndexToX(d.endIndex);
+
+  const y =
+    priceToY(d.endPrice);
+
+  drawDashedLine(
+    x1,y,
+    x2,y,
+    lineColor,
+    2
+  );
+
+  ctx.save();
+
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+
+  ctx.moveTo(x2,y-7);
+  ctx.lineTo(x2,y+7);
+
+  ctx.stroke();
+
+  ctx.restore();
+
+  drawStructureLabel(
+    label,
+    (x1+x2)/2,
+    y,
+    lineColor
+  );
+}
+
+
+/* =========================================================
+   STRUCTURE LABEL
+========================================================= */
+
+function drawStructureLabel(text,x,y,color){
+
+  ctx.save();
+
+  ctx.font = "bold 11px Arial";
+
+  const width =
+    ctx.measureText(text).width+12;
+
+  const height = 20;
+
+  ctx.fillStyle =
+    "rgba(13,20,27,.94)";
+
+  ctx.fillRect(
+    x-width/2,
+    y-height-3,
+    width,
+    height
+  );
+
+  ctx.fillStyle = color;
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  ctx.fillText(
+    text,
+    x,
+    y-height/2-3
+  );
+
+  ctx.restore();
+}
+
+
+/* =========================================================
+   LINE
 ========================================================= */
 
 function drawLine(
-  x1,y1,x2,y2,color,width=2
+  x1,y1,x2,y2,color,width
 ){
 
   ctx.save();
@@ -1669,7 +1527,6 @@ function drawLine(
   ctx.stroke();
 
   ctx.restore();
-
 }
 
 
@@ -1678,7 +1535,7 @@ function drawLine(
 ========================================================= */
 
 function drawDashedLine(
-  x1,y1,x2,y2,color,width=2
+  x1,y1,x2,y2,color,width
 ){
 
   ctx.save();
@@ -1698,7 +1555,6 @@ function drawDashedLine(
   ctx.setLineDash([]);
 
   ctx.restore();
-
 }
 
 
@@ -1710,17 +1566,11 @@ function drawRectangle(
   x1,y1,x2,y2,fill,border
 ){
 
-  const x =
-  Math.min(x1,x2);
+  const x = Math.min(x1,x2);
+  const y = Math.min(y1,y2);
 
-  const y =
-  Math.min(y1,y2);
-
-  const width =
-  Math.abs(x2-x1);
-
-  const height =
-  Math.abs(y2-y1);
+  const width = Math.abs(x2-x1);
+  const height = Math.abs(y2-y1);
 
   ctx.save();
 
@@ -1738,7 +1588,6 @@ function drawRectangle(
   );
 
   ctx.restore();
-
 }
 
 
@@ -1746,15 +1595,11 @@ function drawRectangle(
    TEXT
 ========================================================= */
 
-function drawText(
-  text,x,y,color="#fff"
-){
+function drawText(text,x,y,color){
 
   ctx.save();
 
-  ctx.font =
-  "bold 11px Arial";
-
+  ctx.font = "bold 11px Arial";
   ctx.fillStyle = color;
 
   ctx.textAlign = "left";
@@ -1767,293 +1612,16 @@ function drawText(
   );
 
   ctx.restore();
-
 }
 
 
 /* =========================================================
-   STRUCTURE LABEL
-========================================================= */
-
-function drawStructureLabel(
-  text,x,y,color
-){
-
-  ctx.save();
-
-  ctx.font =
-  "bold 11px Arial";
-
-  const width =
-  ctx.measureText(text).width + 14;
-
-  const height = 20;
-
-  ctx.fillStyle =
-  "rgba(13,20,27,.95)";
-
-  ctx.fillRect(
-    x - width/2,
-    y - height - 4,
-    width,
-    height
-  );
-
-  ctx.fillStyle = color;
-
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-
-  ctx.fillText(
-    text,
-    x,
-    y - height/2 - 4
-  );
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   DRAW BOS / CHOCH
-========================================================= */
-
-function drawStructure(
-  d,color,label
-){
-
-  const x1 =
-  candleIndexToX(
-    d.startIndex
-  );
-
-  const x2 =
-  candleIndexToX(
-    d.endIndex
-  );
-
-  const y =
-  priceToY(
-    d.endPrice
-  );
-
-  drawDashedLine(
-    x1,
-    y,
-    x2,
-    y,
-    color,
-    2
-  );
-
-  ctx.save();
-
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    x2,
-    y - 8
-  );
-
-  ctx.lineTo(
-    x2,
-    y + 8
-  );
-
-  ctx.stroke();
-
-  ctx.restore();
-
-  drawStructureLabel(
-    label,
-    (x1+x2)/2,
-    y,
-    color
-  );
-
-}
-
-
-/* =========================================================
-   DRAW ONE ANCHORED DRAWING
-========================================================= */
-
-function drawAnchoredDrawing(d){
-
-  if(d.type === "trend"){
-
-    drawLine(
-      candleIndexToX(d.startIndex),
-      priceToY(d.startPrice),
-      candleIndexToX(d.endIndex),
-      priceToY(d.endPrice),
-      "#4ba7ff",
-      2
-    );
-
-  }
-
-
-  if(d.type === "horizontal"){
-
-    const y =
-    priceToY(d.startPrice);
-
-    drawLine(
-      0,
-      y,
-      chartWidth,
-      y,
-      "#b9c5d0",
-      1
-    );
-
-  }
-
-
-  if(d.type === "liquidity"){
-
-    const y =
-    priceToY(d.startPrice);
-
-    drawDashedLine(
-      0,
-      y,
-      chartWidth,
-      y,
-      "#35d8e5",
-      2
-    );
-
-    drawText(
-      "LIQUIDITY",
-      8,
-      y - 8,
-      "#35d8e5"
-    );
-
-  }
-
-
-  if(d.type === "ob"){
-
-    drawRectangle(
-      candleIndexToX(d.startIndex),
-      priceToY(d.startPrice),
-      candleIndexToX(d.endIndex),
-      priceToY(d.endPrice),
-      "rgba(45,125,255,.17)",
-      "#3d92ff"
-    );
-
-    drawText(
-      "ORDER BLOCK",
-      Math.min(
-        candleIndexToX(d.startIndex),
-        candleIndexToX(d.endIndex)
-      ) + 5,
-      Math.min(
-        priceToY(d.startPrice),
-        priceToY(d.endPrice)
-      ) + 14,
-      "#4a9dff"
-    );
-
-  }
-
-
-  if(d.type === "fvg"){
-
-    drawRectangle(
-      candleIndexToX(d.startIndex),
-      priceToY(d.startPrice),
-      candleIndexToX(d.endIndex),
-      priceToY(d.endPrice),
-      "rgba(245,201,61,.15)",
-      "#efc83f"
-    );
-
-    drawText(
-      "FVG",
-      Math.min(
-        candleIndexToX(d.startIndex),
-        candleIndexToX(d.endIndex)
-      ) + 5,
-      Math.min(
-        priceToY(d.startPrice),
-        priceToY(d.endPrice)
-      ) + 14,
-      "#efc83f"
-    );
-
-  }
-
-
-  if(d.type === "bos"){
-
-    drawStructure(
-      d,
-      "#3d9cff",
-      "BOS"
-    );
-
-  }
-
-
-  if(d.type === "choch"){
-
-    drawStructure(
-      d,
-      "#a96cff",
-      "CHOCH"
-    );
-
-  }
-
-
-  if(d.type === "text"){
-
-    drawText(
-      d.text,
-      candleIndexToX(d.startIndex),
-      priceToY(d.startPrice),
-      "#fff"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   DRAW ALL DRAWINGS
-========================================================= */
-
-function drawDrawings(){
-
-  drawings.forEach(d => {
-
-    drawAnchoredDrawing(d);
-
-  });
-
-}
-
-
-/* =========================================================
-   MAIN CHART
+   MAIN DRAW
 ========================================================= */
 
 function drawChart(){
 
-  if(
-    !chartWidth ||
-    !chartHeight
-  )
+  if(!chartWidth || !chartHeight)
     return;
 
   ctx.clearRect(
@@ -2066,60 +1634,50 @@ function drawChart(){
   calculateRange();
 
   drawGrid();
-
   drawCandles();
-
   drawDrawings();
-
   drawReplayMarker();
-
   drawPriceScale();
-
   drawTimeScale();
 
   const current =
-  candles[replayIndex];
+    candles[replayIndex];
 
   if(current){
 
     priceLabel.textContent =
-    current.close.toFixed(5);
-
+      current.close.toFixed(5);
   }
-
 }
 
 
 /* =========================================================
-   TOOL SELECTION
+   TOOL BUTTONS
 ========================================================= */
 
 document
 .querySelectorAll(".tool[data-tool]")
-.forEach(button => {
+.forEach(button=>{
 
-  button.addEventListener(
-    "click",
-    () => {
+  button.addEventListener("click",()=>{
 
-      document
-      .querySelectorAll(".tool[data-tool]")
-      .forEach(b =>
-        b.classList.remove("active")
-      );
+    document
+    .querySelectorAll(".tool[data-tool]")
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
 
-      button.classList.add("active");
+    button.classList.add("active");
 
-      selectedTool =
+    selectedTool =
       button.dataset.tool;
 
-      document
-      .getElementById("toolHint")
-      .textContent =
+    document
+    .getElementById("toolHint")
+    .textContent =
       toolNames[selectedTool];
 
-    }
-  );
+  });
 
 });
 
@@ -2130,24 +1688,17 @@ document
 
 canvas.addEventListener(
   "pointerdown",
-  event => {
+  event=>{
 
     event.preventDefault();
 
-    const p =
-    getPoint(event);
+    const p = getPoint(event);
 
-    /* PAN */
-
-    if(selectedTool === "pan"){
+    if(selectedTool==="pan"){
 
       panStart = {
-
         x:p.x,
-
-        visibleStart:
         visibleStart
-
       };
 
       canvas.setPointerCapture(
@@ -2155,13 +1706,9 @@ canvas.addEventListener(
       );
 
       return;
-
     }
 
-
-    /* DELETE */
-
-    if(selectedTool === "delete"){
+    if(selectedTool==="delete"){
 
       deleteNearestDrawing(
         p.x,
@@ -2169,115 +1716,87 @@ canvas.addEventListener(
       );
 
       return;
-
     }
 
+    if(selectedTool==="select"){
 
-    /* SELECT */
-
-    if(selectedTool === "select")
       return;
+    }
 
-
-    /* TEXT */
-
-    if(selectedTool === "text"){
+    if(selectedTool==="text"){
 
       const text =
-      prompt("Enter your label:");
+        prompt("Enter your label:");
 
-      if(text && text.trim()){
+      if(text){
 
         drawings.push({
 
           type:"text",
 
-          startIndex:
-          p.candleIndex,
+          startIndex:p.candleIndex,
 
-          startPrice:
-          p.price,
+          startPrice:p.price,
 
-          text:
-          text.trim()
+          text:text
 
         });
 
         drawChart();
-
       }
 
       return;
-
     }
 
-
-    /* HORIZONTAL */
-
-    if(selectedTool === "horizontal"){
+    if(selectedTool==="horizontal"){
 
       drawings.push({
 
         type:"horizontal",
 
-        startIndex:
-        p.candleIndex,
+        startIndex:p.candleIndex,
 
-        startPrice:
-        p.price
+        startPrice:p.price
 
       });
 
       drawChart();
 
       return;
-
     }
 
-
-    /* LIQUIDITY */
-
-    if(selectedTool === "liquidity"){
+    if(selectedTool==="liquidity"){
 
       drawings.push({
 
         type:"liquidity",
 
-        startIndex:
-        p.candleIndex,
+        startIndex:p.candleIndex,
 
-        startPrice:
-        p.price
+        startPrice:p.price
 
       });
 
       drawChart();
 
       return;
-
     }
-
-
-    /* DRAWING TOOLS */
 
     isDrawing = true;
 
+    pointerStart = p;
+
     currentDrawing = {
 
-      type:
-      selectedTool,
+      type:selectedTool,
 
-      startIndex:
-      p.candleIndex,
+      startIndex:p.candleIndex,
 
-      startPrice:
-      p.price,
+      startPrice:p.price,
 
-      endIndex:
-      p.candleIndex,
+      endIndex:p.candleIndex,
 
-      endPrice:
-      p.price
+      endPrice:p.price
 
     };
 
@@ -2295,62 +1814,51 @@ canvas.addEventListener(
 
 canvas.addEventListener(
   "pointermove",
-  event => {
+  event=>{
 
     event.preventDefault();
 
-    const p =
-    getPoint(event);
-
-
-    /* PAN */
+    const p = getPoint(event);
 
     if(
-      selectedTool === "pan" &&
+      selectedTool==="pan" &&
       panStart
     ){
 
       const slot =
-      chartWidth /
-      visibleCount;
+        chartWidth / visibleCount;
 
       const movement =
-      p.x - panStart.x;
+        p.x - panStart.x;
 
       const candleMovement =
-      Math.round(
-        movement / slot
-      );
+        Math.round(
+          movement/slot
+        );
 
       visibleStart =
-      panStart.visibleStart -
-      candleMovement;
+        panStart.visibleStart -
+        candleMovement;
 
       const maxStart =
-      Math.max(
-        0,
-        replayIndex -
-        visibleCount +
-        1
-      );
+        Math.max(
+          0,
+          replayIndex-visibleCount+1
+        );
 
       visibleStart =
-      Math.max(
-        0,
-        Math.min(
-          maxStart,
-          visibleStart
-        )
-      );
+        Math.max(
+          0,
+          Math.min(
+            maxStart,
+            visibleStart
+          )
+        );
 
       drawChart();
 
       return;
-
     }
-
-
-    /* DRAW */
 
     if(
       !isDrawing ||
@@ -2359,10 +1867,10 @@ canvas.addEventListener(
       return;
 
     currentDrawing.endIndex =
-    p.candleIndex;
+      p.candleIndex;
 
     currentDrawing.endPrice =
-    p.price;
+      p.price;
 
     drawChart();
 
@@ -2378,14 +1886,13 @@ canvas.addEventListener(
 
 canvas.addEventListener(
   "pointerup",
-  event => {
+  event=>{
 
-    if(selectedTool === "pan"){
+    if(selectedTool==="pan"){
 
       panStart = null;
 
       return;
-
     }
 
     if(!isDrawing)
@@ -2393,26 +1900,41 @@ canvas.addEventListener(
 
     isDrawing = false;
 
-    const p =
-    getPoint(event);
+    const p = getPoint(event);
 
     currentDrawing.endIndex =
-    p.candleIndex;
+      p.candleIndex;
 
     currentDrawing.endPrice =
-    p.price;
+      p.price;
+
+    if(
+      (
+        currentDrawing.type==="ob" ||
+        currentDrawing.type==="fvg"
+      ) &&
+      currentDrawing.startIndex ===
+      currentDrawing.endIndex
+    ){
+
+      currentDrawing.endIndex =
+        Math.min(
+          replayIndex,
+          currentDrawing.startIndex+1
+        );
+    }
 
     const candleDistance =
-    Math.abs(
-      currentDrawing.endIndex -
-      currentDrawing.startIndex
-    );
+      Math.abs(
+        currentDrawing.endIndex -
+        currentDrawing.startIndex
+      );
 
     const priceDistance =
-    Math.abs(
-      currentDrawing.endPrice -
-      currentDrawing.startPrice
-    );
+      Math.abs(
+        currentDrawing.endPrice -
+        currentDrawing.startPrice
+      );
 
     if(
       candleDistance > 0 ||
@@ -2423,7 +1945,6 @@ canvas.addEventListener(
       drawings.push(
         currentDrawing
       );
-
     }
 
     currentDrawing = null;
@@ -2443,11 +1964,9 @@ function drawTemporaryDrawing(){
   if(!currentDrawing)
     return;
 
-  const d =
-  currentDrawing;
+  const d = currentDrawing;
 
-
-  if(d.type === "trend"){
+  if(d.type==="trend"){
 
     drawLine(
       candleIndexToX(d.startIndex),
@@ -2457,63 +1976,60 @@ function drawTemporaryDrawing(){
       "#fff",
       2
     );
-
   }
 
-
   if(
-    d.type === "ob" ||
-    d.type === "fvg"
+    d.type==="ob" ||
+    d.type==="fvg"
   ){
 
-    const isOB =
-    d.type === "ob";
+    const fill =
+      d.type==="ob"
+      ? "rgba(45,125,255,.17)"
+      : "rgba(245,201,61,.15)";
+
+    const border =
+      d.type==="ob"
+      ? "#3d92ff"
+      : "#efc83f";
 
     drawRectangle(
       candleIndexToX(d.startIndex),
       priceToY(d.startPrice),
       candleIndexToX(d.endIndex),
       priceToY(d.endPrice),
-      isOB
-      ? "rgba(45,125,255,.17)"
-      : "rgba(245,201,61,.15)",
-      isOB
-      ? "#3d92ff"
-      : "#efc83f"
+      fill,
+      border
     );
-
   }
 
-
   if(
-    d.type === "bos" ||
-    d.type === "choch"
+    d.type==="bos" ||
+    d.type==="choch"
   ){
 
     const color =
-    d.type === "bos"
-    ? "#3d9cff"
-    : "#a96cff";
+      d.type==="bos"
+      ? "#3d9cff"
+      : "#a96cff";
 
     const label =
-    d.type === "bos"
-    ? "BOS"
-    : "CHOCH";
+      d.type==="bos"
+      ? "BOS"
+      : "CHOCH";
 
     const x1 =
-    candleIndexToX(d.startIndex);
+      candleIndexToX(d.startIndex);
 
     const x2 =
-    candleIndexToX(d.endIndex);
+      candleIndexToX(d.endIndex);
 
     const y =
-    priceToY(d.endPrice);
+      priceToY(d.endPrice);
 
     drawDashedLine(
-      x1,
-      y,
-      x2,
-      y,
+      x1,y,
+      x2,y,
       color,
       2
     );
@@ -2524,9 +2040,7 @@ function drawTemporaryDrawing(){
       y,
       color
     );
-
   }
-
 }
 
 
@@ -2540,60 +2054,62 @@ function deleteNearestDrawing(x,y){
     return;
 
   let nearest = -1;
-
   let smallest = Infinity;
 
-  drawings.forEach(
-    (d,index) => {
+  drawings.forEach((d,index)=>{
 
-      let distance = Infinity;
+    let distance = Infinity;
 
+    if(
+      d.type==="horizontal" ||
+      d.type==="liquidity"
+    ){
 
-      if(
-        d.type === "horizontal" ||
-        d.type === "liquidity"
-      ){
+      const lineY =
+        priceToY(d.startPrice);
 
-        distance =
-        Math.abs(
-          y -
-          priceToY(d.startPrice)
-        );
+      distance =
+        Math.abs(y-lineY);
 
-      }else{
+    }else{
 
-        const x1 =
+      const x1 =
+        candleIndexToX(d.startIndex);
+
+      const y1 =
+        priceToY(d.startPrice);
+
+      const x2 =
         candleIndexToX(
-          d.startIndex
+          d.endIndex || d.startIndex
         );
 
-        const y1 =
+      const y2 =
         priceToY(
-          d.startPrice
+          d.endPrice || d.startPrice
         );
 
-        distance =
-        Math.sqrt(
-          Math.pow(x-x1,2) +
-          Math.pow(y-y1,2)
+      const lineDistance =
+        distanceToSegment(
+          x,y,
+          x1,y1,
+          x2,y2
         );
 
-      }
-
-      if(distance < smallest){
-
-        smallest = distance;
-        nearest = index;
-
-      }
-
+      distance = lineDistance;
     }
-  );
 
+    if(distance < smallest){
+
+      smallest = distance;
+      nearest = index;
+    }
+
+  });
 
   if(
     nearest >= 0 &&
-    smallest < 50
+    smallest < 45
   ){
 
     drawings.splice(
@@ -2602,9 +2118,54 @@ function deleteNearestDrawing(x,y){
     );
 
     drawChart();
+  }
+}
 
+
+/* =========================================================
+   DISTANCE TO LINE SEGMENT
+========================================================= */
+
+function distanceToSegment(
+  px,py,
+  x1,y1,
+  x2,y2
+){
+
+  const dx = x2-x1;
+  const dy = y2-y1;
+
+  if(dx===0 && dy===0){
+
+    return Math.sqrt(
+      Math.pow(px-x1,2) +
+      Math.pow(py-y1,2)
+    );
   }
 
+  const t =
+    (
+      (px-x1)*dx +
+      (py-y1)*dy
+    ) /
+    (dx*dx+dy*dy);
+
+  const clamped =
+    Math.max(
+      0,
+      Math.min(1,t)
+    );
+
+  const x =
+    x1 + clamped*dx;
+
+  const y =
+    y1 + clamped*dy;
+
+  return Math.sqrt(
+    Math.pow(px-x,2) +
+    Math.pow(py-y,2)
+  );
 }
 
 
@@ -2616,7 +2177,7 @@ document
 .getElementById("clearDrawings")
 .addEventListener(
   "click",
-  () => {
+  ()=>{
 
     if(!drawings.length)
       return;
@@ -2630,7 +2191,6 @@ document
       drawings = [];
 
       drawChart();
-
     }
 
   }
@@ -2645,48 +2205,43 @@ document
 .getElementById("nextBtn")
 .addEventListener(
   "click",
-  () => {
+  ()=>{
 
     if(
       replayIndex <
-      candles.length - 1
+      candles.length-1
     ){
 
       replayIndex++;
 
       if(
         replayIndex >=
-        visibleStart +
-        visibleCount -
-        5
+        visibleStart+
+        visibleCount-5
       ){
 
         visibleStart =
-        replayIndex -
-        visibleCount +
-        5;
-
+          replayIndex -
+          visibleCount +
+          5;
       }
 
       const maxStart =
-      Math.max(
-        0,
-        replayIndex -
-        visibleCount +
-        1
-      );
+        Math.max(
+          0,
+          replayIndex-visibleCount+1
+        );
 
       visibleStart =
-      Math.max(
-        0,
-        Math.min(
-          maxStart,
-          visibleStart
-        )
-      );
+        Math.max(
+          0,
+          Math.min(
+            maxStart,
+            visibleStart
+          )
+        );
 
       updateReplay();
-
     }
 
   }
@@ -2701,7 +2256,7 @@ document
 .getElementById("previousBtn")
 .addEventListener(
   "click",
-  () => {
+  ()=>{
 
     if(replayIndex > 0){
 
@@ -2709,33 +2264,29 @@ document
 
       if(
         replayIndex <
-        visibleStart + 5
+        visibleStart+5
       ){
 
         visibleStart =
-        Math.max(
-          0,
-          replayIndex - 5
-        );
-
+          Math.max(
+            0,
+            replayIndex-5
+          );
       }
 
       const maxStart =
-      Math.max(
-        0,
-        replayIndex -
-        visibleCount +
-        1
-      );
+        Math.max(
+          0,
+          replayIndex-visibleCount+1
+        );
 
       visibleStart =
-      Math.min(
-        visibleStart,
-        maxStart
-      );
+        Math.min(
+          visibleStart,
+          maxStart
+        );
 
       updateReplay();
-
     }
 
   }
@@ -2750,24 +2301,25 @@ document
 .getElementById("resetBtn")
 .addEventListener(
   "click",
-  () => {
+  ()=>{
 
     replayIndex =
-    Math.min(
-      35,
-      candles.length - 1
-    );
+      Math.min(
+        35,
+        candles.length-1
+      );
 
     visibleCount =
-    Math.min(
-      70,
-      candles.length
-    );
+      Math.min(
+        70,
+        candles.length
+      );
 
     visibleStart = 0;
 
-    updateReplay();
+    drawings = [];
 
+    updateReplay();
   }
 );
 
@@ -2776,32 +2328,26 @@ document
    FIT
 ========================================================= */
 
-function fitChart(){
-
-  visibleCount =
-  Math.min(
-    70,
-    replayIndex + 1
-  );
-
-  visibleStart =
-  Math.max(
-    0,
-    replayIndex -
-    visibleCount +
-    1
-  );
-
-  drawChart();
-
-}
-
-
 document
 .getElementById("fitBtn")
 .addEventListener(
   "click",
-  fitChart
+  ()=>{
+
+    visibleCount =
+      Math.min(
+        70,
+        replayIndex+1
+      );
+
+    visibleStart =
+      Math.max(
+        0,
+        replayIndex-visibleCount+1
+      );
+
+    drawChart();
+  }
 );
 
 
@@ -2811,87 +2357,93 @@ document
 
 canvas.addEventListener(
   "wheel",
-  event => {
+  event=>{
 
     event.preventDefault();
 
     const before =
-    getPoint(event);
+      getPoint(event);
 
     const oldCount =
-    visibleCount;
+      visibleCount;
 
     if(event.deltaY < 0){
 
       visibleCount =
-      Math.max(
-        20,
-        Math.floor(
-          visibleCount * .85
-        )
-      );
+        Math.max(
+          25,
+          Math.floor(
+            visibleCount*.85
+          )
+        );
 
     }else{
 
       visibleCount =
-      Math.min(
-        180,
-        Math.floor(
-          visibleCount * 1.15
-        )
-      );
-
+        Math.min(
+          150,
+          Math.floor(
+            visibleCount*1.15
+          )
+        );
     }
 
     const ratio =
-    before.x / chartWidth;
+      before.x/chartWidth;
 
     const candleAtPointer =
-    visibleStart +
-    ratio * oldCount;
+      visibleStart +
+      ratio*oldCount;
 
     visibleStart =
-    Math.round(
-      candleAtPointer -
-      ratio * visibleCount
-    );
+      Math.round(
+        candleAtPointer -
+        ratio*visibleCount
+      );
 
     const maxStart =
-    Math.max(
-      0,
-      replayIndex -
-      visibleCount +
-      1
-    );
+      Math.max(
+        0,
+        replayIndex-visibleCount+1
+      );
 
     visibleStart =
-    Math.max(
-      0,
-      Math.min(
-        maxStart,
-        visibleStart
-      )
-    );
+      Math.max(
+        0,
+        Math.min(
+          maxStart,
+          visibleStart
+        )
+      );
 
     drawChart();
 
   },
-  {
-    passive:false
-  }
+  {passive:false}
 );
 
 
 /* =========================================================
-   DOUBLE TAP / DOUBLE CLICK FIT
+   DOUBLE CLICK FIT
 ========================================================= */
 
 canvas.addEventListener(
   "dblclick",
-  () => {
+  ()=>{
 
-    fitChart();
+    visibleCount =
+      Math.min(
+        70,
+        replayIndex+1
+      );
 
+    visibleStart =
+      Math.max(
+        0,
+        replayIndex-visibleCount+1
+      );
+
+    drawChart();
   }
 );
 
@@ -2904,16 +2456,14 @@ document
 .getElementById("pair")
 .addEventListener(
   "change",
-  () => {
-
-    const pair =
-    document.getElementById("pair").value;
+  ()=>{
 
     document
     .getElementById("pairTitle")
-    .textContent = pair;
-
-    generateCandles();
+    .textContent =
+      document
+      .getElementById("pair")
+      .value;
 
   }
 );
@@ -2927,19 +2477,17 @@ document
 .getElementById("timeframe")
 .addEventListener(
   "change",
-  () => {
+  ()=>{
 
     const select =
-    document.getElementById("timeframe");
+      document.getElementById("timeframe");
 
     document
     .getElementById("timeTitle")
     .textContent =
-    select.options[
-      select.selectedIndex
-    ].text;
-
-    generateCandles();
+      select.options[
+        select.selectedIndex
+      ].text;
 
   }
 );
@@ -2952,7 +2500,7 @@ document
 function updateReplay(){
 
   const current =
-  candles[replayIndex];
+    candles[replayIndex];
 
   if(!current)
     return;
@@ -2960,58 +2508,13 @@ function updateReplay(){
   document
   .getElementById("replayTime")
   .textContent =
-  "Replay candle: " +
-  new Date(
-    current.time
-  ).toUTCString();
+    "Replay candle: " +
+    new Date(
+      current.time
+    ).toUTCString();
 
   drawChart();
-
 }
-
-
-/* =========================================================
-   DIRECTION BUTTONS
-========================================================= */
-
-document
-.getElementById("buyBtn")
-.addEventListener(
-  "click",
-  () => {
-
-    direction = "BUY";
-
-    document
-    .getElementById("buyBtn")
-    .classList.add("active");
-
-    document
-    .getElementById("sellBtn")
-    .classList.remove("active");
-
-  }
-);
-
-
-document
-.getElementById("sellBtn")
-.addEventListener(
-  "click",
-  () => {
-
-    direction = "SELL";
-
-    document
-    .getElementById("sellBtn")
-    .classList.add("active");
-
-    document
-    .getElementById("buyBtn")
-    .classList.remove("active");
-
-  }
-);
 
 
 /* =========================================================
@@ -3023,49 +2526,48 @@ function updateStats(){
   document
   .getElementById("balance")
   .textContent =
-  "$" +
-  balance.toLocaleString(
-    undefined,
-    {
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    }
-  );
+    "$" +
+    balance.toLocaleString(
+      undefined,
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
 
   document
   .getElementById("trades")
   .textContent =
-  trades;
+    trades;
 
   document
   .getElementById("wins")
   .textContent =
-  wins;
+    wins;
 
   document
   .getElementById("losses")
   .textContent =
-  losses;
+    losses;
 
   const rate =
-  trades === 0
-  ? 0
-  : wins / trades * 100;
+    trades===0
+    ? 0
+    : wins/trades*100;
 
   document
   .getElementById("winRate")
   .textContent =
-  rate.toFixed(1) + "%";
+    rate.toFixed(1)+"%";
 
   document
   .getElementById("profitLoss")
   .textContent =
-  (profitLoss >= 0 ? "+" : "-") +
-  "$" +
-  Math.abs(
-    profitLoss
-  ).toFixed(2);
-
+    (profitLoss>=0?"+":"-") +
+    "$" +
+    Math.abs(
+      profitLoss
+    ).toFixed(2);
 }
 
 
@@ -3075,80 +2577,83 @@ function updateStats(){
 
 function recordTrade(result){
 
+  const direction =
+    document
+    .getElementById("direction")
+    .value;
+
   const entry =
-  parseFloat(
-    document.getElementById("entry").value
-  );
+    parseFloat(
+      document
+      .getElementById("entry")
+      .value
+    );
 
   const sl =
-  parseFloat(
-    document.getElementById("sl").value
-  );
+    parseFloat(
+      document
+      .getElementById("sl")
+      .value
+    );
 
   const tp =
-  parseFloat(
-    document.getElementById("tp").value
-  );
+    parseFloat(
+      document
+      .getElementById("tp")
+      .value
+    );
 
   const risk =
-  parseFloat(
-    document.getElementById("risk").value
-  );
-
+    parseFloat(
+      document
+      .getElementById("risk")
+      .value
+    );
 
   if(
     !Number.isFinite(entry) ||
     !Number.isFinite(sl) ||
     !Number.isFinite(tp) ||
     !Number.isFinite(risk) ||
-    risk <= 0
+    risk<=0
   ){
 
     document
     .getElementById("tradeResult")
     .textContent =
-    "Please enter valid trade information.";
+      "Please enter valid trade information.";
 
     return;
-
   }
 
-
   const stopDistance =
-  Math.abs(entry-sl);
+    Math.abs(entry-sl);
 
   const rewardDistance =
-  Math.abs(tp-entry);
+    Math.abs(tp-entry);
 
-
-  if(stopDistance <= 0){
+  if(stopDistance<=0){
 
     document
     .getElementById("tradeResult")
     .textContent =
-    "Stop Loss must be different from Entry.";
+      "Stop Loss must be different from Entry.";
 
     return;
-
   }
 
-
   const rr =
-  rewardDistance /
-  stopDistance;
+    rewardDistance/stopDistance;
 
   let amount;
 
-
-  if(result === "WIN"){
+  if(result==="WIN"){
 
     amount =
-    risk * rr;
+      risk*rr;
 
     balance += amount;
-
     profitLoss += amount;
-
     wins++;
 
   }else{
@@ -3156,294 +2661,425 @@ function recordTrade(result){
     amount = risk;
 
     balance -= amount;
-
     profitLoss -= amount;
-
     losses++;
-
   }
-
 
   trades++;
 
   updateStats();
 
-
   document
   .getElementById("tradeResult")
   .innerHTML =
-  "<strong>" +
-  result +
-  "</strong><br>" +
-
-  "Direction: " +
-  direction +
-  "<br>" +
-
-  "Risk: $" +
-  risk.toFixed(2) +
-  "<br>" +
-
-  "R:R: 1:" +
-  rr.toFixed(2) +
-  "<br>" +
-
-  "Result: " +
-
-  (
-    result === "WIN"
-    ? "+$" + amount.toFixed(2)
-    : "-$" + amount.toFixed(2)
-  );
-
+    "<strong>"+result+"</strong><br>" +
+    "Direction: "+direction+"<br>" +
+    "Risk: $"+risk.toFixed(2)+"<br>" +
+    "R:R: 1:"+rr.toFixed(2)+"<br>" +
+    "Result: "+
+    (
+      result==="WIN"
+      ? "+$"+amount.toFixed(2)
+      : "-$"+amount.toFixed(2)
+    );
 }
 
+
+/* =========================================================
+   TRADE BUTTONS
+========================================================= */
 
 document
 .getElementById("recordWin")
 .addEventListener(
   "click",
-  () => recordTrade("WIN")
+  ()=>recordTrade("WIN")
 );
-
 
 document
 .getElementById("recordLoss")
 .addEventListener(
   "click",
-  () => recordTrade("LOSS")
+  ()=>recordTrade("LOSS")
 );
 
 
 /* =========================================================
-   CSV LOADER
+   FILE NAME
+========================================================= */
+
+document
+.getElementById("csvFile")
+.addEventListener(
+  "change",
+  ()=>{
+
+    const file =
+      document
+      .getElementById("csvFile")
+      .files[0];
+
+    document
+    .getElementById("fileName")
+    .textContent =
+      file
+      ? file.name
+      : "No file selected";
+  }
+);
+
+
+/* =========================================================
+   CSV PARSER
+========================================================= */
+
+function parseCSVLine(line){
+
+  const result = [];
+  let current = "";
+  let insideQuotes = false;
+
+  for(let i=0;i<line.length;i++){
+
+    const char = line[i];
+
+    if(char === '"'){
+
+      insideQuotes =
+        !insideQuotes;
+
+      continue;
+    }
+
+    if(
+      char === "," &&
+      !insideQuotes
+    ){
+
+      result.push(
+        current.trim()
+      );
+
+      current = "";
+
+    }else{
+
+      current += char;
+    }
+  }
+
+  result.push(
+    current.trim()
+  );
+
+  return result;
+}
+
+
+/* =========================================================
+   NORMALIZE DATE
+========================================================= */
+
+function parseCSVTime(value,index){
+
+  if(
+    value === undefined ||
+    value === null ||
+    value === ""
+  ){
+
+    return (
+      Date.UTC(
+        2025,
+        0,
+        2,
+        0,
+        index*15
+      )
+    );
+  }
+
+  const raw =
+    String(value).trim();
+
+  if(/^\d+$/.test(raw)){
+
+    const number =
+      Number(raw);
+
+    if(raw.length >= 13)
+      return number;
+
+    if(raw.length >= 10)
+      return number*1000;
+  }
+
+  let parsed =
+    Date.parse(raw);
+
+  if(Number.isFinite(parsed))
+    return parsed;
+
+  /*
+    Supports formats such as:
+
+    2025-01-02 08:15:00
+    2025/01/02 08:15
+    02/01/2025 08:15
+  */
+
+  const fixed =
+    raw.replace(
+      /^(\d{2})\/(\d{2})\/(\d{4})/,
+      "$3-$2-$1"
+    );
+
+  parsed =
+    Date.parse(fixed);
+
+  if(Number.isFinite(parsed))
+    return parsed;
+
+  return (
+    Date.UTC(
+      2025,
+      0,
+      2,
+      0,
+      index*15
+    )
+  );
+}
+
+
+/* =========================================================
+   LOAD CSV
 ========================================================= */
 
 document
 .getElementById("loadCsv")
 .addEventListener(
   "click",
-  () => {
+  ()=>{
 
     const file =
-    document
-    .getElementById("csvFile")
-    .files[0];
+      document
+      .getElementById("csvFile")
+      .files[0];
+
+    const result =
+      document
+      .getElementById("fileResult");
 
     if(!file){
 
-      document
-      .getElementById("fileResult")
-      .textContent =
-      "Choose a CSV file first.";
+      result.textContent =
+        "Choose a CSV file first.";
 
       return;
-
     }
 
+    result.textContent =
+      "Reading historical market data...";
 
     const reader =
-    new FileReader();
-
+      new FileReader();
 
     reader.onload =
-    function(event){
+      function(event){
 
-      const text =
-      event.target.result;
+        try{
 
-      const lines =
-      text
-      .split(/\r?\n/)
-      .filter(
-        line => line.trim()
-      );
+          const text =
+            String(
+              event.target.result
+            );
 
+          const lines =
+            text
+            .split(/\r?\n/)
+            .map(x=>x.trim())
+            .filter(Boolean);
 
-      if(lines.length < 2){
+          if(lines.length < 2){
 
-        document
-        .getElementById("fileResult")
-        .textContent =
-        "The CSV file does not contain enough data.";
+            result.textContent =
+              "The CSV file does not contain enough data.";
 
-        return;
-
-      }
-
-
-      const header =
-      lines[0]
-      .split(",")
-      .map(
-        x => x.trim().toLowerCase()
-      );
-
-
-      const dateIndex =
-      header.findIndex(
-        x =>
-        [
-          "date",
-          "time",
-          "timestamp",
-          "datetime"
-        ].includes(x)
-      );
-
-
-      const openIndex =
-      header.indexOf("open");
-
-      const highIndex =
-      header.indexOf("high");
-
-      const lowIndex =
-      header.indexOf("low");
-
-      const closeIndex =
-      header.indexOf("close");
-
-
-      if(
-        openIndex === -1 ||
-        highIndex === -1 ||
-        lowIndex === -1 ||
-        closeIndex === -1
-      ){
-
-        document
-        .getElementById("fileResult")
-        .textContent =
-        "CSV must contain Open, High, Low and Close columns.";
-
-        return;
-
-      }
-
-
-      const loaded = [];
-
-
-      for(
-        let i=1;
-        i<lines.length;
-        i++
-      ){
-
-        const parts =
-        lines[i].split(",");
-
-        const open =
-        parseFloat(
-          parts[openIndex]
-        );
-
-        const high =
-        parseFloat(
-          parts[highIndex]
-        );
-
-        const low =
-        parseFloat(
-          parts[lowIndex]
-        );
-
-        const close =
-        parseFloat(
-          parts[closeIndex]
-        );
-
-
-        if(
-          Number.isFinite(open) &&
-          Number.isFinite(high) &&
-          Number.isFinite(low) &&
-          Number.isFinite(close)
-        ){
-
-          let time;
-
-          if(dateIndex !== -1){
-
-            time =
-            new Date(
-              parts[dateIndex]
-            ).getTime();
-
+            return;
           }
 
-          if(!Number.isFinite(time)){
+          const header =
+            parseCSVLine(lines[0])
+            .map(
+              x =>
+                x
+                .replace(/^\uFEFF/,"")
+                .trim()
+                .toLowerCase()
+            );
 
-            time =
-            Date.now() +
-            loaded.length * 60000;
+          const findColumn =
+            names =>
+              header.findIndex(
+                h => names.includes(h)
+              );
 
+          const dateIndex =
+            findColumn([
+              "date",
+              "time",
+              "datetime",
+              "date/time",
+              "timestamp",
+              "timestamp (utc)"
+            ]);
+
+          const openIndex =
+            findColumn(["open","o"]);
+
+          const highIndex =
+            findColumn(["high","h"]);
+
+          const lowIndex =
+            findColumn(["low","l"]);
+
+          const closeIndex =
+            findColumn(["close","c"]);
+
+          if(
+            openIndex === -1 ||
+            highIndex === -1 ||
+            lowIndex === -1 ||
+            closeIndex === -1
+          ){
+
+            result.innerHTML =
+              "CSV must contain <strong>Open, High, Low and Close</strong> columns.";
+
+            return;
           }
 
+          const loaded = [];
 
-          loaded.push({
+          for(
+            let i=1;
+            i<lines.length;
+            i++
+          ){
 
-            open,
-            high,
-            low,
-            close,
-            time
+            const parts =
+              parseCSVLine(lines[i]);
 
-          });
+            const open =
+              parseFloat(
+                parts[openIndex]
+              );
 
+            const high =
+              parseFloat(
+                parts[highIndex]
+              );
+
+            const low =
+              parseFloat(
+                parts[lowIndex]
+              );
+
+            const close =
+              parseFloat(
+                parts[closeIndex]
+              );
+
+            if(
+              !Number.isFinite(open) ||
+              !Number.isFinite(high) ||
+              !Number.isFinite(low) ||
+              !Number.isFinite(close)
+            ){
+
+              continue;
+            }
+
+            const time =
+              parseCSVTime(
+                dateIndex===-1
+                ? ""
+                : parts[dateIndex],
+                loaded.length
+              );
+
+            loaded.push({
+
+              open,
+              high,
+              low,
+              close,
+              time
+
+            });
+          }
+
+          if(!loaded.length){
+
+            result.textContent =
+              "No valid OHLC candles were found.";
+
+            return;
+          }
+
+          /*
+            Make sure candles are chronological.
+          */
+
+          loaded.sort(
+            (a,b)=>a.time-b.time
+          );
+
+          candles = loaded;
+
+          replayIndex =
+            Math.min(
+              50,
+              candles.length-1
+            );
+
+          visibleCount =
+            Math.min(
+              70,
+              candles.length
+            );
+
+          visibleStart =
+            Math.max(
+              0,
+              replayIndex-visibleCount+1
+            );
+
+          drawings = [];
+
+          result.innerHTML =
+            "<strong>✓ "+loaded.length+
+            " historical candles loaded.</strong><br>"+
+            "You can now use Previous Candle and Next Candle to backtest.";
+
+          updateReplay();
+
+        }catch(error){
+
+          console.error(error);
+
+          result.textContent =
+            "Could not read this CSV file. Please check its format.";
         }
+      };
 
-      }
+    reader.onerror =
+      function(){
 
-
-      if(!loaded.length){
-
-        document
-        .getElementById("fileResult")
-        .textContent =
-        "No valid OHLC candles found.";
-
-        return;
-
-      }
-
-
-      candles = loaded;
-
-      replayIndex =
-      Math.min(
-        50,
-        candles.length - 1
-      );
-
-      visibleCount =
-      Math.min(
-        70,
-        candles.length
-      );
-
-      visibleStart =
-      Math.max(
-        0,
-        replayIndex -
-        visibleCount +
-        1
-      );
-
-      drawings = [];
-
-
-      document
-      .getElementById("fileResult")
-      .textContent =
-      loaded.length +
-      " historical candles loaded successfully.";
-
-      updateReplay();
-
-    };
-
+        result.textContent =
+          "The file could not be read.";
+      };
 
     reader.readAsText(file);
 
@@ -3452,49 +3088,36 @@ document
 
 
 /* =========================================================
-   PHONE ORIENTATION
+   ORIENTATION
 ========================================================= */
 
-function refreshAfterRotation(){
+function redrawAfterRotation(){
 
   setTimeout(
-    () => {
-
+    ()=>{
       resizeCanvas();
-
     },
-    300
+    250
   );
-
 }
-
 
 window.addEventListener(
   "orientationchange",
-  refreshAfterRotation
+  redrawAfterRotation
 );
-
 
 if(screen.orientation){
 
   screen.orientation.addEventListener(
     "change",
-    refreshAfterRotation
+    redrawAfterRotation
   );
-
 }
-
-
-/* =========================================================
-   WINDOW RESIZE
-========================================================= */
 
 window.addEventListener(
   "resize",
-  () => {
-
+  ()=>{
     resizeCanvas();
-
   }
 );
 
@@ -3503,20 +3126,18 @@ window.addEventListener(
    START
 ========================================================= */
 
-generateCandles();
+generateDemoCandles();
 
 updateStats();
 
 setTimeout(
-  () => {
-
+  ()=>{
     resizeCanvas();
-
   },
-  200
+  100
 );
 
 </script>
 
 </body>
-    </html>
+</html>
